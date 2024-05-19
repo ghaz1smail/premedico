@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "304622880796",
+    "project_id": "flutterapp1-4a7a5",
+    "storage_bucket": "flutterapp1-4a7a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304622880796:android:1a7b34a4c8fd11679537d9",
+        "android_client_info": {
+          "package_name": "com.comma.premedico"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB90ssoMKqfbND-Iwg1t-GoLEvzKFLtLeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

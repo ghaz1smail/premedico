@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:premedico/main.dart';
+import 'package:premedico/video_call.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,7 +30,7 @@ class MyHome extends StatelessWidget {
         Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => const VideoCall(),
           ),
         );
       },
@@ -67,19 +68,19 @@ class MyHome extends StatelessWidget {
       pageBackgroundColor: Colors.white,
       background: [
         Image.asset(
-          'images/p1.jpg',
+          'assets/images/p1.jpg',
           height: 400,
         ),
         Image.asset(
-          'images/p2.jpg',
+          'assets/images/p2.jpg',
           height: 400,
         ),
         Image.asset(
-          'images/p3.jpg',
+          'assets/images/p3.jpg',
           height: 400,
         ),
         Image.asset(
-          'images/p4.jpg',
+          'assets/images/p4.jpg',
           height: 400,
         ),
       ],

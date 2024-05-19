@@ -5,6 +5,7 @@ import 'package:premedico/forgotpassword.dart';
 import 'package:premedico/notimpotant/main.dart';
 import 'package:premedico/signup.dart';
 import 'package:premedico/sliders.dart';
+import 'package:premedico/view/screens/welcome_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
         "onboarding": (context) => const MyHome(),
         "forgetpassword": (context) => const Password(title: "Password")
       },
+      home: const WelcomeScreen(),
     );
   }
 }

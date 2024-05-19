@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:premedico/forgotpassword.dart';
 
-
 final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatelessWidget {
@@ -289,8 +288,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _login() {
-    if (_key.currentState!.validate()) {
-      print("successijhsiodfh");
-    }
+    if (_key.currentState!.validate()) {}
   }
 }

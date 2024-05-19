@@ -124,8 +124,6 @@ class _RunMyAppState extends State<RunMyApp> {
   }
 
   void _login() {
-    if (_key.currentState!.validate()) {
-      print("good ");
-    }
+    if (_key.currentState!.validate()) {}
   }
 }
