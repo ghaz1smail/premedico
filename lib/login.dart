@@ -1,20 +1,12 @@
-// ignore_for_file: unused_import, body_might_complete_normally_nullable
-
 import 'package:flutter/material.dart';
-//import 'dart:developer';
-import 'dart:ui';
-import 'package:flutter_application_1/forgotpassword.dart';
-//final Firebase _auth = FirebaseAuth.instance;
-//final FirebaseAuth _auth = FirebaseAuth.instance;
+import 'package:premedico/forgotpassword.dart';
 
-void main(List<String> args) {
-  runApp(MyApp());
-}
+
 final _messengerKey = GlobalKey<ScaffoldMessengerState>();
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,20 +16,22 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       scaffoldMessengerKey: _messengerKey,
-       routes: {"forgetpassword":(context) => Password(title: "password")},
+      routes: {
+        "forgetpassword": (context) => const Password(title: "password")
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
- 
+
   final String title;
- 
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
- 
+
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -45,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //String _userEmail = "";
   final _key = GlobalKey<FormState>();
   bool? _checkboxvalue = false;
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,16 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //Stack(
-               // children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 40, 0, 0),
-                    child: const Text(
-                      "You must sign in to join ",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                //],
-             // ),
+              // children: <Widget>[
+              Container(
+                padding: const EdgeInsets.fromLTRB(15, 40, 0, 0),
+                child: const Text(
+                  "You must sign in to join ",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              //],
+              // ),
               Container(
                 padding: const EdgeInsets.only(top: 35, left: 20, right: 30),
                 child: Column(
@@ -142,31 +136,34 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Checkbox(
                               value: _checkboxvalue,
-                              onChanged: (newValue) => oncheckboxchang(newValue)),
+                              onChanged: (newValue) =>
+                                  oncheckboxchang(newValue)),
                         ],
                       ),
                     ),
                     const SizedBox(
                       height: 40,
                     ),
-       
+
                     InkWell(
                       onTap: _login,
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Color(0xff007F70),
+                          color: const Color(0xff007F70),
                           borderRadius: BorderRadius.circular(50),
                         ),
                         child: const Center(
                             child: Text(
                           "Log In ",
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold,fontSize: 18),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
                         )),
                       ),
                     ),
-       
+
                     // ElevatedButton(
                     // onPressed: _login,
                     // child: const Text("Login"),
@@ -229,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       alignment: Alignment.center,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
+                        children: [
                           const Text(
                             'Dont have an Acccount ? ',
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -238,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onTap: () {
                               Navigator.of(context).pushNamed("signup");
                             },
-                            child:const Text(
+                            child: const Text(
                               'Sign Up',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -258,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
- 
+
   //String? _validUserName(String? value) {
   // if (value!.isEmpty) {
   // return "  Must not be empty";
@@ -266,7 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //   return null;
   //   }
   // }
- 
+
   String? _emailValidation(String? value) {
     if (emailController.text.isEmpty) {
       return "email should not be empty!!";
@@ -275,25 +272,25 @@ class _MyHomePageState extends State<MyHomePage> {
         .hasMatch(emailController.text)) {
       return "must be email format!";
     }
+    return null;
   }
- 
+
   oncheckboxchang(bool? newValue) {
     setState(() {
       _checkboxvalue = newValue;
     });
   }
- 
+
   String? _validatePass(String? value) {
     if (value!.length <= 8 || value.isEmpty) {
       return 'Password must not be empty and greater than 8 charaters';
     }
     return null;
   }
- 
+
   void _login() {
-    if(_key.currentState!.validate()){
+    if (_key.currentState!.validate()) {
       print("successijhsiodfh");
     }
-    
   }
 }

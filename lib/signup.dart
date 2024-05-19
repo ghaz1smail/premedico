@@ -1,18 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_application_1/login.dart';
-//import 'package:flutter_application_1/forgotpassword.dart';
-//import 'dart:developer';
-import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-//final Firebase _auth = FirebaseAuth.instance;
-//final FirebaseAuth _auth = FirebaseAuth.instance;
-
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,6 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

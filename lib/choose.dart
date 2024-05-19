@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
- 
-void main() {
-  runApp(RunMyApp());
-}
- 
+
 class RunMyApp extends StatefulWidget {
   const RunMyApp({super.key});
- 
+
   @override
   State<RunMyApp> createState() => _RunMyAppState();
 }
- 
+
 class _RunMyAppState extends State<RunMyApp> {
   final _key = GlobalKey<FormState>();
   @override
@@ -26,7 +22,7 @@ class _RunMyAppState extends State<RunMyApp> {
             children: [
               Column(
                 children: [
-                  SizedBox(height: 100, width: 190),
+                  const SizedBox(height: 100, width: 190),
                   const Text(
                     " Choose User  ",
                     textAlign: TextAlign.center,
@@ -36,7 +32,7 @@ class _RunMyAppState extends State<RunMyApp> {
                     width: 130,
                     height: 80,
                   ),
- 
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -46,7 +42,7 @@ class _RunMyAppState extends State<RunMyApp> {
                         decoration: const BoxDecoration(
                           shape: BoxShape
                               .circle, // shape makes the circular button
- 
+
                           color: Color.fromARGB(255, 13, 154, 126),
                         ),
                         child: ElevatedButton(
@@ -67,7 +63,7 @@ class _RunMyAppState extends State<RunMyApp> {
                         decoration: const BoxDecoration(
                           shape: BoxShape
                               .circle, // shape makes the circular button
- 
+
                           color: Color.fromARGB(255, 208, 227, 209),
                         ),
                         child: ElevatedButton(
@@ -87,11 +83,11 @@ class _RunMyAppState extends State<RunMyApp> {
                       //),
                     ],
                   ),
- 
+
                   //////////////
                   ///
-                  SizedBox(height: 130, width: 190),
- 
+                  const SizedBox(height: 130, width: 190),
+
                   //                 Column(
                   //                 mainAxisAlignment: MainAxisAlignment.center,
                   //               children: [
@@ -120,13 +116,13 @@ class _RunMyAppState extends State<RunMyApp> {
               ),
             ],
           ),
- 
+
           //
         ),
       ),
     );
   }
- 
+
   void _login() {
     if (_key.currentState!.validate()) {
       print("good ");

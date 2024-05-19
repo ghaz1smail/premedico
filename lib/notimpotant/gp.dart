@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(SignUpPage());
-}
-
 class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sign Up Page',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Sign Up'),
+          title: const Text('Sign Up'),
         ),
-        body: SignUpForm(),
+        body: const SignUpForm(),
       ),
     );
   }
 }
 
 class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
+
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
@@ -43,32 +43,25 @@ class _SignUpFormState extends State<SignUpForm> {
           children: <Widget>[
             TextFormField(
               //controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-              
+              decoration: const InputDecoration(labelText: 'Username'),
             ),
             TextFormField(
               //controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextFormField(
               //controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
-              
             ),
             TextFormField(
-              
-              decoration: InputDecoration(labelText: 'Confirm Password'),
+              decoration: const InputDecoration(labelText: 'Confirm Password'),
               obscureText: true,
-              
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                
-              },
-              child: Text('Sign Up'),
+              onPressed: () {},
+              child: const Text('Sign Up'),
             ),
           ],
         ),

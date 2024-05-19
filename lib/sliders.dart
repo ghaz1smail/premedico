@@ -1,20 +1,7 @@
-
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-//import 'package:flutter_application_1/login.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
-import 'package:flutter_application_1/main.dart';
-//import 'package:flutter_application_1/signup.dart';
-
-void main() {
-  runApp(const MyApp());
-  
-}
+import 'package:premedico/main.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -37,18 +24,18 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return OnBoardingSlider(
       finishButtonText: 'Register',
-      
+
       onFinish: () {
         Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => const HomePage(),
           ),
         );
       },
       finishButtonStyle: FinishButtonStyle(
         backgroundColor: kDarkBlueColor,
-        shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
       ),
       // skipTextButton: Text(
       //   'Skip',
@@ -86,16 +73,14 @@ class MyHome extends StatelessWidget {
         Image.asset(
           'images/p2.jpg',
           height: 400,
-
         ),
         Image.asset(
           'images/p3.jpg',
           height: 400,
-
-        ), Image.asset(
+        ),
+        Image.asset(
           'images/p4.jpg',
           height: 400,
-
         ),
       ],
       speed: 1.8,
@@ -104,13 +89,13 @@ class MyHome extends StatelessWidget {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-               const SizedBox(
-                 height: 480,
-               ),
+              SizedBox(
+                height: 480,
+              ),
               // Text(
               //   'Hello',
               //   textAlign: TextAlign.center,
@@ -120,10 +105,10 @@ class MyHome extends StatelessWidget {
               //     fontWeight: FontWeight.w600,
               //   ),
               // ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Consult only with a doctor you trust',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -139,11 +124,11 @@ class MyHome extends StatelessWidget {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
+              SizedBox(
                 height: 480,
               ),
               // Text(
@@ -155,10 +140,10 @@ class MyHome extends StatelessWidget {
               //     fontWeight: FontWeight.w600,
               //   ),
               // ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Find a ot of specialist doctor in one place',
                 textAlign: TextAlign.center,
                 style: TextStyle(
