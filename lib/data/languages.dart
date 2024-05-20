@@ -40,6 +40,21 @@ class Languages extends Translations {
           'password_must_not_be_at_least_8_charaters':
               'يجب ألا تكون كلمة المرور مكونة من 8 أحرف على الأقل',
           'already_have_an_acccount': 'هل لديك حساب بالفعل؟',
+          'passwords_not_match': 'كلمات المرور غير متطابقة',
+          'error_occured': 'حدث خطأ',
+          'week_password': 'كلمة المرور ضعيفة',
+          'email_already_in_use': 'البريد الإلكتروني مستخدم بالفعل',
+          'please_try_again_later': 'يرجى المحاولة مرة أخرى لاحقاً',
+          'remember_me': 'تذكرني',
+          'submit': 'إرسال',
+          'please_enter_your_email_to_reset_your_password':
+              'يرجى إدخال بريدك الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك',
+          'back_to_login': 'العودة إلى تسجيل الدخول',
+          'reset_password_link_sent_to_email':
+              'تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني',
+          'wrong_password': 'كلمة المرور خاطئة',
+          'user_not_found': 'المستخدم غير موجود',
+          'change_account_type': 'تغيير نوع الحساب'
         },
         'en_US': {
           'login': 'Login',
@@ -72,6 +87,8 @@ class Languages extends Translations {
           'please_enter_username_at_least_3_characters':
               'Please enter username at least 3 characters',
           'email': 'Email',
+          'name': 'Name',
+          'please_enter_your_name': 'Please enter your name',
           'please_enter_a_valid_email': 'Please enter a valid email',
           'password': 'Password',
           'enter_password': 'Enter password',
@@ -80,6 +97,21 @@ class Languages extends Translations {
           'password_must_not_be_at_least_8_charaters':
               'Password must not be at least 8 charaters',
           'already_have_an_acccount': 'Already have an acccount ?',
+          'passwords_not_match': 'Passwords not match',
+          'error_occured': 'Error occured',
+          'week_password': 'Week password',
+          'email_already_in_use': 'Email already in use',
+          'please_try_again_later': 'Please try again later',
+          'remember_me': 'Remember me',
+          'submit': 'Submit',
+          'please_enter_your_email_to_reset_your_password':
+              'Please enter your email to reset your password',
+          'back_to_login': 'Back to Login',
+          'reset_password_link_sent_to_email':
+              'Reset password link sent to email',
+          'wrong_password': 'Wrong password',
+          'user_not_found': 'User not found',
+          'change_account_type': 'Change account type',
         },
       };
 }

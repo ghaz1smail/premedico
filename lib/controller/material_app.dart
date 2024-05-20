@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/language_controller.dart';
 import 'package:premedico/data/languages.dart';
-import 'package:premedico/forgotpassword.dart';
+import 'package:premedico/view/screens/d_signup_screen.dart';
+import 'package:premedico/view/screens/forget_password_screen.dart';
+import 'package:premedico/view/screens/doctor_dashboard_screen.dart';
 import 'package:premedico/view/screens/login_screen.dart';
-import 'package:premedico/view/screens/signup_screen.dart';
+import 'package:premedico/view/screens/patient_dashboard_screen.dart';
+import 'package:premedico/view/screens/p_signup_screen.dart';
 import 'package:premedico/view/screens/landing_screen.dart';
 import 'package:premedico/view/screens/on_boarding_screen.dart';
 import 'package:premedico/view/screens/splash_screen.dart';
@@ -24,10 +27,13 @@ class MyApp extends StatelessWidget {
       locale: Locale(Get.find<LanguageController>().getSavedLanguage()),
       translations: Languages(),
       routes: {
-        "signup": (context) => const SignUpScreen(),
+        "psignup": (context) => const PSignUpScreen(),
+        "dsignup": (context) => const DSignUpScreen(),
         "login": (context) => const LoginScreen(),
+        "patient": (context) => const PatientDashboardScreen(),
+        "doctor": (context) => const DoctorDashboardScreen(),
         "onboarding": (context) => const OnBoardingScreen(),
-        "forgetpassword": (context) => const Password(),
+        "forgetpassword": (context) => const ForgetPasswordScreen(),
         "landing": (context) => const LandingScreen(),
       },
       home: const SplashScreen(),

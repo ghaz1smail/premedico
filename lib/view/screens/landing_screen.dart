@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -46,13 +47,13 @@ class _LandingScreenState extends State<LandingScreen> {
                       minWidth: double.infinity,
                       height: 60,
                       onPressed: () {
-                        Get.offNamed("login");
+                        Get.find<AuthController>().changeType('patient');
                       },
                       shape: RoundedRectangleBorder(
                           side: BorderSide(color: appConstant.backgroundColor),
                           borderRadius: BorderRadius.circular(50)),
                       child: Text(
-                        "login".tr,
+                        "patient".tr,
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -66,13 +67,13 @@ class _LandingScreenState extends State<LandingScreen> {
                       minWidth: double.infinity,
                       height: 60,
                       onPressed: () {
-                        Get.offNamed("signup");
+                        Get.find<AuthController>().changeType('doctor');
                       },
                       color: appConstant.backgroundColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),
                       child: Text(
-                        "sign_up".tr,
+                        "doctor".tr,
                         style: TextStyle(
                           color: appConstant.primaryColor,
                           fontWeight: FontWeight.w600,
