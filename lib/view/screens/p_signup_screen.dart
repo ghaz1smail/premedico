@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
-import 'package:premedico/view/widget/custom_loading.dart';
+import 'package:premedico/view/widget/custom_button.dart';
+import 'package:premedico/view/widget/custom_text_field.dart';
 
-class PSignUpScreen extends StatefulWidget {
+class PSignUpScreen extends StatelessWidget {
   const PSignUpScreen({
     super.key,
   });
 
-  @override
-  State<PSignUpScreen> createState() => _PSignUpScreenState();
-}
-
-class _PSignUpScreenState extends State<PSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: GetBuilder<AuthController>(
@@ -32,157 +28,47 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 25),
-                  TextFormField(
-                    autocorrect: false,
+                  CustomTextField(
+                    hint: 'enter_your_name',
+                    label: 'name',
                     controller: controller.name,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.person,
-                        color: appConstant.primaryColor,
-                      ),
-                      hintText: "enter_your_name".tr,
-                      hintStyle: const TextStyle(
-                        color: Color.fromARGB(255, 145, 138, 138),
-                      ),
-                      labelText: 'name'.tr,
-                      labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: appConstant.primaryColor),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(30),
-                          )),
-                      border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      )),
-                    ),
+                    icon: Icons.person,
                     validator: controller.validateUserName,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: TextFormField(
-                      autocorrect: false,
+                    child: CustomTextField(
+                      hint: 'enter_your_email',
+                      label: 'email',
                       controller: controller.email,
-                      keyboardType: TextInputType.text,
+                      icon: Icons.mail_sharp,
                       validator: controller.emailValidation,
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.mail_sharp,
-                          color: appConstant.primaryColor,
-                        ),
-                        hintText: "enter_your_email".tr,
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 145, 138, 138),
-                        ),
-                        labelText: 'email'.tr,
-                        labelStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: appConstant.primaryColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(30),
-                            )),
-                        border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        )),
-                      ),
                     ),
                   ),
-                  TextFormField(
-                    autocorrect: false,
+                  CustomTextField(
+                    hint: 'enter_password',
+                    label: 'password',
                     controller: controller.password,
-                    decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.lock,
-                          color: appConstant.primaryColor,
-                        ),
-                        hintText: "enter_password".tr,
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 145, 138, 138),
-                        ),
-                        labelText: 'password'.tr,
-                        labelStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: appConstant.primaryColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(30),
-                            )),
-                        border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ))),
-                    obscureText: true,
+                    icon: Icons.lock,
                     validator: controller.validatePass,
+                    obscure: true,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: TextFormField(
-                      autocorrect: false,
-                      validator: controller.validateConfirmPass,
+                    child: CustomTextField(
+                      hint: 'enter_password',
+                      label: 'password',
                       controller: controller.conPassword,
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.password,
-                          color: appConstant.primaryColor,
-                        ),
-                        hintText: "confirm_your_password".tr,
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 145, 138, 138),
-                        ),
-                        labelText: 'confirm_password'.tr,
-                        labelStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: appConstant.primaryColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(30),
-                            )),
-                        border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        )),
-                      ),
-                      obscureText: true,
+                      icon: Icons.lock,
+                      validator: controller.validateConfirmPass,
+                      obscure: true,
                     ),
                   ),
                   const SizedBox(height: 40),
-                  MaterialButton(
-                    minWidth: double.infinity,
-                    height: 60,
-                    onPressed: () async {
-                      controller.signingUp();
-                    },
-                    color: appConstant.primaryColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    child: controller.signupLoading
-                        ? const CustomLoading(
-                            green: false,
-                            size: 50,
-                          )
-                        : Text(
-                            "sign_up".tr,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.white),
-                          ),
+                  CustomButton(
+                    onPressed: controller.signingUp,
+                    title: 'sign_up',
+                    loading: controller.signupLoading,
                   ),
                   const SizedBox(
                     height: 70.0,
@@ -201,7 +87,7 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.toNamed('login');
+                            Get.offNamed('login');
                           },
                           child: Text(
                             'login'.tr,

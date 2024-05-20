@@ -112,6 +112,7 @@ class Languages extends Translations {
           'wrong_password': 'Wrong password',
           'user_not_found': 'User not found',
           'change_account_type': 'Change account type',
+          'welcome_back': 'Welcome back',
         },
       };
 }

@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
-import 'package:premedico/view/widget/custom_loading.dart';
+import 'package:premedico/view/widget/custom_button.dart';
 
-class ForgetPasswordScreen extends StatefulWidget {
+class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({super.key});
 
-  @override
-  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
-}
-
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: SafeArea(
@@ -73,36 +68,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       )),
                     ),
                   ),
-                  const SizedBox(
-                    height: 70,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      controller.resetPassword();
-                    },
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff007F70),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: controller.loginLoading
-                          ? const CustomLoading(
-                              green: false,
-                              size: 50,
-                            )
-                          : Center(
-                              child: Text(
-                              "submit".tr,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            )),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 70, bottom: 25),
+                    child: CustomButton(
+                      onPressed: controller.resetPassword,
+                      title: 'submit',
+                      loading: controller.loginLoading,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 25,
                   ),
                   InkWell(
                     onTap: () {
