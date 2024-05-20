@@ -1,24 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Password(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
 class Password extends StatefulWidget {
-  const Password({super.key, required this.title});
-
-  final String title;
+  const Password({super.key});
 
   @override
   State<Password> createState() => _PasswordState();
@@ -30,7 +13,7 @@ class _PasswordState extends State<Password> {
   // int _success = 1;
   //String _userEmail = "";
   final _key = GlobalKey<FormState>();
-  bool? _checkboxvalue = false;
+  bool? checkboxvalue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -199,18 +182,18 @@ class _PasswordState extends State<Password> {
 
   oncheckboxchang(bool? newValue) {
     setState(() {
-      _checkboxvalue = newValue;
+      checkboxvalue = newValue;
     });
   }
 
-  String? _validatePass(String? value) {
+  String? validatePass(String? value) {
     if (value!.length <= 8 || value.isEmpty) {
       return 'Password must not be empty and greater than 8 charaters';
     }
     return null;
   }
 
-  void _login() {
+  void login() {
     if (_key.currentState!.validate()) {
       // _messengerKey.currentState!.showSnackBar(
       //     SnackBar(content: Text('Welcome: ${emailController.text}')));

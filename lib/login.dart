@@ -1,41 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:premedico/forgotpassword.dart';
 
-final _messengerKey = GlobalKey<ScaffoldMessengerState>();
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      scaffoldMessengerKey: _messengerKey,
-      routes: {
-        "forgetpassword": (context) => const Password(title: "password")
-      },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({
+    super.key,
+  });
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  // int _success = 1;
-  //String _userEmail = "";
   final _key = GlobalKey<FormState>();
   bool? _checkboxvalue = false;
 

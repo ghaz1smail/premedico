@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:premedico/controller/language_controller.dart';
+import 'package:premedico/data/languages.dart';
 import 'package:premedico/forgotpassword.dart';
-import 'package:premedico/notimpotant/main.dart';
+import 'package:premedico/login.dart';
 import 'package:premedico/signup.dart';
-import 'package:premedico/sliders.dart';
-import 'package:premedico/view/screens/welcome_screen.dart';
+import 'package:premedico/view/screens/landing_screen.dart';
+import 'package:premedico/view/screens/on_boarding_screen.dart';
+import 'package:premedico/view/screens/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,13 +20,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      locale: Locale(Get.find<LanguageController>().getSavedLanguage()),
+      translations: Languages(),
       routes: {
-        "signup": (context) => const SignUp(title: "Sign up"),
-        "login": (context) => const MyHomePage(),
-        "onboarding": (context) => const MyHome(),
-        "forgetpassword": (context) => const Password(title: "Password")
+        "signup": (context) => const SignUp(),
+        "login": (context) => const LoginScreen(),
+        "onboarding": (context) => const OnBoardingScreen(),
+        "forgetpassword": (context) => const Password(),
+        "landing": (context) => const LandingScreen(),
       },
-      home: const WelcomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

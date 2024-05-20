@@ -1,29 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SignUp(title: 'Flutter Demo Home Page'),
-      scaffoldMessengerKey: _messengerKey,
-    );
-  }
-}
-
 final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key, required this.title});
-
-  final String title;
+  const SignUp({
+    super.key,
+  });
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -209,19 +192,19 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () async {
                         _login();
                         try {
-                          final credential = await FirebaseAuth.instance
+                          await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
                             email: emailController.text,
                             password: passwordController.text,
                           );
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
-                            print('The password provided is too weak.');
+                            // print('The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
-                            print('The account already exists for that email.');
+                            // print('The account already exists for that email.');
                           }
                         } catch (e) {
-                          print(e);
+                          // print(e);
                         }
                       },
                       color: const Color(0xff007F70),

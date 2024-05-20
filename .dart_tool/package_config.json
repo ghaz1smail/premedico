@@ -8,6 +8,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "archive",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/archive-3.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/args-2.5.0",
       "packageUri": "lib/",
@@ -354,6 +360,12 @@
       "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "lottie",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/lottie-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "matcher",
@@ -752,7 +764,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-05-19T21:03:37.121Z",
+  "generated": "2024-05-20T08:02:10.560302Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }
