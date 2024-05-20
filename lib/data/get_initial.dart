@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,14 +13,6 @@ class GetInitial {
   initialControllers() {
     Get.put(LanguageController());
     Get.put(AuthController());
-    // Get.put(DashboardController());
-    // Get.put(NotificationController());
-    // Get.put(PackageController());
-    // Get.put(OfferController());
-    // Get.put(OrderController());
-    // Get.put(CouponsController());
-    // Get.put(BalanceController());
-    // Get.put(ArticlesController());
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -26,6 +21,9 @@ class GetInitial {
 
 AppConstant appConstant = AppConstant();
 final getStorage = GetStorage();
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
 Color colorCompute(color) {
   return Color(int.parse('0xff$color')).computeLuminance() > 0.5

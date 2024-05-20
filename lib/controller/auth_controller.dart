@@ -1,120 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/user_model.dart';
 
 class AuthController extends GetxController {
   GlobalKey<FormState> signUp = GlobalKey();
   TextEditingController name = TextEditingController(),
       email = TextEditingController(),
-      address = TextEditingController(),
-      city = TextEditingController(),
-      phone = TextEditingController();
-  GlobalKey<FormState> key = GlobalKey();
-  String phoneCode = 'JO';
-  bool loginLoading = false,
-      newUser = false,
-      first = true,
-      verifyLoding = false,
-      createLoading = false,
-      carTypesLoading = false;
-  // User userData = User();
+      username = TextEditingController(),
+      password = TextEditingController(),
+      conPassword = TextEditingController();
+  bool notification = false;
+  String type = 'patient';
+  UserModel? userData;
 
-  createAccount() async {
-    // createLoading = true;
-    // update();
-
-    // var response = await http
-    //     .post(Uri.parse(appConstant.baseUrlv2 + appConstant.createAccount),
-    //         body: json.encode({
-    //           "car_type": selectedType,
-    //           "phone": userData.phone,
-    //           "name": name.text,
-    //           "email": email.text,
-    //           "city_id": '1978',
-    //           "country_id": '111',
-    //           "user_type": "customer"
-    //         }),
-    //         headers: {'Content-Type': 'application/json'});
-
-    // if (response.statusCode == 200) {
-    //   Get.log(response.body);
-    //   var body = json.decode(response.body) as Map;
-
-    //   userData = User.fromJson(body['data']['user']);
-    //   getStorage.write('token', userData.token);
-    //   createLoading = false;
-
-    //   navigator();
-    // } else {
-    //   createLoading = false;
-
-    //   Get.log(response.body);
-    //   Get.log(response.statusCode.toString());
-    // }
-    // update();
+  changeType(x) {
+    type = x;
+    update();
   }
 
-  checkToken() async {
-    await Future.delayed(const Duration(seconds: 2));
-    var firstTime = getStorage.read('first') ?? true;
-    if (firstTime) {
-      Get.offNamed('onboarding');
-    } else {
-      Get.offNamed('landing');
-    }
-    // userData.token = getStorage.read('token') ?? '';
-    // Get.log(userData.token.toString());
-    // Get.find<LanguageController>().locale = Get.locale!.languageCode;
-    // if (userData.token!.isNotEmpty) {
-    //   await getUserData();
-    //   await getCarTypes();
-    // } else {
-    //   await Future.delayed(const Duration(milliseconds: 500));
+  notificationPermission() async {
+    notification = getStorage.read('notification') ?? false;
 
-    // }
+    await firebaseMessaging.requestPermission(
+        alert: true, badge: true, sound: true);
+    firebaseMessaging.setForegroundNotificationPresentationOptions();
+    if (notification) {
+      if (GetPlatform.isIOS) {
+        await firebaseMessaging.getAPNSToken();
+      }
+
+      firebaseMessaging.subscribeToTopic(userData!.uid!.toLowerCase());
+
+      firebaseMessaging.getToken().then((value) {
+        Get.log('token: $value');
+        firestore.collection('users').doc(userData!.uid).update({
+          'token': value,
+          'ios': GetPlatform.isIOS,
+        });
+      });
+    }
+  }
+
+  createAccount() async {}
+
+  checkToken() async {
+    var firstTime = getStorage.read('first') ?? true;
+
+    if (firebaseAuth.currentUser == null) {
+      await Future.delayed(const Duration(seconds: 2));
+      if (firstTime) {
+        Get.offNamed('onboarding');
+      } else {
+        Get.offNamed('landing');
+      }
+    } else {
+      await getUserData();
+    }
   }
 
   getUserData() async {
-    // var response = await http.get(
-    //     Uri.parse(appConstant.baseUrl + appConstant.viewAccount),
-    //     headers: {'Authorization': 'Bearer ${userData.token}'});
-
-    // if (response.statusCode == 200) {
-    //   Get.log(response.body);
-    //   var data = UserModel.fromJson(json.decode(response.body));
-
-    //   if (data.message == 'success') {
-    //     userData = data.user!;
-    //     navigator();
-    //   } else {
-    //     Get.offNamed('loginScreen');
-    //   }
-    // } else {
-    //   Get.log(response.statusCode.toString() +
-    //       appConstant.baseUrl +
-    //       appConstant.viewAccount);
-    //   Get.offNamed('loginScreen');
-    // }
+    await firestore.collection('users').doc().get().then((value) {
+      if (value.exists) {
+        userData = UserModel.fromJson(value.data()!);
+      } else {
+        userData = UserModel(type: '');
+      }
+      navigator();
+    });
   }
 
   logOut() async {
-    // getStorage.remove('token');
-    // Get.offAllNamed('loginScreen');
-    // try {
-    //   await http.get(Uri.parse(appConstant.baseUrl + appConstant.logout),
-    //       headers: {'Authorization': 'Bearer ${userData.token}'});
-    // } finally {}
+    Get.offNamed('landing');
+    firebaseAuth.signOut();
+    firebaseMessaging.deleteToken();
+    userData = null;
   }
 
   navigator() {
-    // saveDeviceDetails();
-    // switch (userData.type!) {
-    //   case 'customer':
-    //     Get.offAllNamed('homeScreen');
-    //   case 'service_provider':
-    //     Get.offAllNamed('spHomeScreen');
-    //   default:
-    //     Get.offNamed('loginScreen');
-    // }
+    switch (userData!.type) {
+      case 'patient':
+        // Get.offAllNamed('homeScreen');
+        notificationPermission();
+      case 'doctor':
+      // Get.offAllNamed('spHomeScreen');
+      default:
+        Get.offNamed('landing');
+    }
   }
 }
