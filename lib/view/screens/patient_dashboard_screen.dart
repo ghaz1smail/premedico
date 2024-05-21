@@ -18,7 +18,7 @@ class PatientDashboardScreen extends StatelessWidget {
           backgroundColor: appConstant.backgroundColor,
           bottomNavigationBar: SafeArea(
               child: Container(
-            height: Get.width * 0.2,
+            height: Get.width * 0.15,
             decoration: BoxDecoration(
                 color: appConstant.backgroundColor,
                 boxShadow: const [

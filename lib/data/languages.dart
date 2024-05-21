@@ -113,6 +113,12 @@ class Languages extends Translations {
           'user_not_found': 'User not found',
           'change_account_type': 'Change account type',
           'welcome_back': 'Welcome back',
+          'search_doctors_hospitals': 'Search doctors, hospitals',
+          'favourite_doctors': 'Favourite Doctors',
+          'see_all': 'See all',
+          'top_doctors': 'Top doctors',
+          'call_ambulance': 'Call ambulance',
+          'surgery_package': 'Surgery package',
         },
       };
 }
