@@ -40,7 +40,6 @@ class OnBoardingScreen extends StatelessWidget {
             'consult_only_with_a_doctor_you_trust'.tr,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Colors.black26,
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
             ),
@@ -53,7 +52,6 @@ class OnBoardingScreen extends StatelessWidget {
             'find_a_ot_of_specialist_doctor_in_one_place'.tr,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Colors.black26,
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
             ),
@@ -81,7 +79,6 @@ class OnBoardingScreen extends StatelessWidget {
                 'get_connect_with_our_online_consultation'.tr,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Colors.black26,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -111,7 +108,6 @@ class OnBoardingScreen extends StatelessWidget {
                 'where_everyone_is_here_to_help_you'.tr,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Colors.black26,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
                 ),

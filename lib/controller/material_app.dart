@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/language_controller.dart';
+import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/data/languages.dart';
 import 'package:premedico/view/screens/call_ambulance_screen.dart';
 import 'package:premedico/view/screens/d_signup_screen.dart';
 import 'package:premedico/view/screens/favorites_doctors_screen.dart';
 import 'package:premedico/view/screens/forget_password_screen.dart';
 import 'package:premedico/view/screens/doctor_dashboard_screen.dart';
+import 'package:premedico/view/screens/hospitals_screen.dart';
 import 'package:premedico/view/screens/login_screen.dart';
 import 'package:premedico/view/screens/notifications_screen.dart';
 import 'package:premedico/view/screens/patient_dashboard_screen.dart';
@@ -26,9 +28,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        useMaterial3: false,
-        primarySwatch: Colors.blue,
-      ),
+          useMaterial3: false,
+          primaryColor: appConstant.primaryColor,
+          scaffoldBackgroundColor: appConstant.backgroundColor,
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent, elevation: 0)),
       locale: Locale(Get.find<LanguageController>().getSavedLanguage()),
       translations: Languages(),
       routes: {
@@ -45,6 +49,7 @@ class MyApp extends StatelessWidget {
         "topDoctors": (context) => const TopDoctorsScreen(),
         "callAmbulance": (context) => const CallAmbulanceScreen(),
         "surgeryPackage": (context) => const SurgeryPackageScreen(),
+        "hospitals": (context) => const HospitalsScreen(),
       },
       home: const SplashScreen(),
     );

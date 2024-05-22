@@ -7,6 +7,7 @@ class UserModel {
   String? major;
   List? favorites;
   String? rate;
+  String? bio;
   HospitalModel? hospital;
 
   UserModel({
@@ -19,6 +20,7 @@ class UserModel {
     this.rate,
     this.major,
     this.hospital,
+    this.bio,
   });
 
   factory UserModel.fromJson(Map json) {
@@ -32,6 +34,7 @@ class UserModel {
       email: json['email'],
       uid: json['uid'],
       major: json['major'] ?? '',
+      bio: json['bio'] ?? '',
       rate: json['rate'] ?? '0',
       hospital: hospitalx,
       favorites: json['favorites'] ?? [],

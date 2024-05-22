@@ -127,7 +127,7 @@ class _TopDoctorsListState extends State<TopDoctorsList> {
                   child: Divider(),
                 ),
                 Text(
-                  '${userData.major!} | ${userData.hospital!.name}',
+                  '${userData.major} | ${userData.hospital == null ? '' : userData.hospital!.name}',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
                 ),

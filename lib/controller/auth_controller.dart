@@ -176,7 +176,7 @@ class AuthController extends GetxController {
   checkToken() async {
     var firstTime = getStorage.read('first') ?? true;
 
-    if (firebaseAuth.currentUser == null) {
+    if (firebaseAuth.currentUser != null) {
       await Future.delayed(const Duration(seconds: 2));
       if (firstTime) {
         Get.offNamed('onboarding');

@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        Get.to('callAmbulance');
+                                        Get.toNamed('callAmbulance');
                                       },
                                       child: Column(
                                         children: [
@@ -137,7 +137,29 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.to('surgeryPackage');
+                                        Get.toNamed('hospitals');
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/hospital.png',
+                                            height: 50,
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            'hospitals'.tr,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.toNamed('surgeryPackage');
                                       },
                                       child: Column(
                                         children: [

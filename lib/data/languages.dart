@@ -119,6 +119,10 @@ class Languages extends Translations {
           'top_doctors': 'Top doctors',
           'call_ambulance': 'Call ambulance',
           'surgery_package': 'Surgery package',
+          'doctor_details': 'Doctor Details',
+          'about': 'About',
+          'hospitals': 'Hospitals',
+          'book_private_consultation': 'Book Private Consultation',
         },
       };
 }
