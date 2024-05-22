@@ -161,12 +161,23 @@ class AuthController extends GetxController {
     }
   }
 
+  changeNotification() {
+    notification = !notification;
+    update();
+    if (notification) {
+      firebaseMessaging.subscribeToTopic(userData!.uid!.toLowerCase());
+    } else {
+      firebaseMessaging.unsubscribeFromTopic(userData!.uid!.toLowerCase());
+    }
+  }
+
   createAccount() async {
     await firestore.collection('users').doc(firebaseAuth.currentUser!.uid).set({
       'name': name.text,
       'email': email.text,
       'username': username.text,
       'image': '',
+      'uid': firebaseAuth.currentUser!.uid,
       'type': type,
     }).then((value) {
       userData = UserModel(

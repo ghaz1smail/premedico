@@ -5,7 +5,6 @@ import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/data/languages.dart';
 import 'package:premedico/view/screens/call_ambulance_screen.dart';
 import 'package:premedico/view/screens/d_signup_screen.dart';
-import 'package:premedico/view/screens/favorites_doctors_screen.dart';
 import 'package:premedico/view/screens/forget_password_screen.dart';
 import 'package:premedico/view/screens/doctor_dashboard_screen.dart';
 import 'package:premedico/view/screens/hospitals_screen.dart';
@@ -15,9 +14,9 @@ import 'package:premedico/view/screens/patient_dashboard_screen.dart';
 import 'package:premedico/view/screens/p_signup_screen.dart';
 import 'package:premedico/view/screens/landing_screen.dart';
 import 'package:premedico/view/screens/on_boarding_screen.dart';
+import 'package:premedico/view/screens/settings_screen.dart';
 import 'package:premedico/view/screens/splash_screen.dart';
 import 'package:premedico/view/screens/surgery_package_screen.dart';
-import 'package:premedico/view/screens/top_doctors_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,11 +44,10 @@ class MyApp extends StatelessWidget {
         "onboarding": (context) => const OnBoardingScreen(),
         "forgetpassword": (context) => const ForgetPasswordScreen(),
         "landing": (context) => const LandingScreen(),
-        "favoritesDoctors": (context) => const FavoritesDoctorsScreen(),
-        "topDoctors": (context) => const TopDoctorsScreen(),
         "callAmbulance": (context) => const CallAmbulanceScreen(),
         "surgeryPackage": (context) => const SurgeryPackageScreen(),
         "hospitals": (context) => const HospitalsScreen(),
+        "settings": (context) => const SettingsScreen(),
       },
       home: const SplashScreen(),
     );

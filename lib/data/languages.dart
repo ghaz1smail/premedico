@@ -156,6 +156,16 @@ class Languages extends Translations {
           'book': 'Book',
           'consultation': 'Consultation',
           'admin_fee': 'Admin Fee',
+          'my_profile': 'My Profile',
+          'edit_profile': 'Edit profile',
+          'privacy_policy': 'Privacy Policy',
+          'settings': 'Settings',
+          'help': 'Help',
+          'favorites': 'Favorites',
+          'logout': 'Logout',
+          'delete_account': 'Delete account',
+          'password_manger': 'Password manger',
+          'notifications': 'Notifications',
         },
       };
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/view/screens/all_top_favourite_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/favourite_doctors_list.dart';
 import 'package:premedico/view/widget/top_doctors_list.dart';
@@ -197,7 +198,9 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 TextButton(
                                     onPressed: () {
-                                      Get.toNamed('favoritesDoctors');
+                                      Get.to(() => const AllTopFavouriteScreen(
+                                            top: false,
+                                          ));
                                     },
                                     child: Text(
                                       'see_all'.tr,
@@ -221,7 +224,8 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 TextButton(
                                     onPressed: () {
-                                      Get.toNamed('topDoctors');
+                                      Get.to(
+                                          () => const AllTopFavouriteScreen());
                                     },
                                     child: Text(
                                       'see_all'.tr,
