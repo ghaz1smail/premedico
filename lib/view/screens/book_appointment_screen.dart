@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:premedico/controller/order_controller.dart';
+import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/user_model.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 
@@ -93,6 +95,53 @@ class BookAppointmentScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'date'.tr,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w700),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text('change'.tr))
+                  ],
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: appConstant.primaryColor.withOpacity(0.2),
+                    child: Icon(Icons.calendar_month,
+                        color: appConstant.primaryColor),
+                  ),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(DateFormat('EEEE, MM dd,yyyy | hh:mm a')
+                      .format(controller.dateTimePicker)),
+                ),
+                Divider(
+                  thickness: 0.2,
+                  color: appConstant.primaryColor,
+                ),
+                Text(
+                  'reason'.tr,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    backgroundColor: appConstant.primaryColor.withOpacity(0.2),
+                    child:
+                        Icon(Icons.edit_note, color: appConstant.primaryColor),
+                  ),
+                  title: Text('describe_what_you_feel'.tr),
+                ),
+                Divider(
+                  thickness: 0.2,
+                  color: appConstant.primaryColor,
                 ),
               ],
             ),
