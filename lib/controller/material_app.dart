@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:premedico/controller/language_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/data/languages.dart';
+import 'package:premedico/view/screens/ai_chat_screen.dart';
 import 'package:premedico/view/screens/call_ambulance_screen.dart';
 import 'package:premedico/view/screens/d_signup_screen.dart';
 import 'package:premedico/view/screens/forget_password_screen.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         "surgeryPackage": (context) => const SurgeryPackageScreen(),
         "hospitals": (context) => const HospitalsScreen(),
         "settings": (context) => const SettingsScreen(),
+        "ai": (context) => const AiChatScreen(),
       },
       home: const SplashScreen(),
     );

@@ -76,7 +76,20 @@ class Languages extends Translations {
           'total': 'المجموع',
           'book': 'احجز',
           'consultation': 'استشارة',
-          'admin_fee': 'رسوم إدارية'
+          'admin_fee': 'رسوم إدارية',
+          'my_profile': 'ملفي الشخصي',
+          'edit_profile': 'تعديل الملف الشخصي',
+          'privacy_policy': 'سياسة الخصوصية',
+          'settings': 'الإعدادات',
+          'help': 'مساعدة',
+          'favorites': 'المفضلة',
+          'logout': 'تسجيل الخروج',
+          'delete_account': 'حذف الحساب',
+          'password_manger': 'مدير كلمات المرور',
+          'notifications': 'الإشعارات',
+          'AI_assistant': 'المساعد الذكي',
+          'typing': 'يكتب',
+          'change_language': 'تغيير اللغة',
         },
         'en_US': {
           'login': 'Login',
@@ -166,6 +179,9 @@ class Languages extends Translations {
           'delete_account': 'Delete account',
           'password_manger': 'Password manger',
           'notifications': 'Notifications',
+          'AI_assistant': 'AI assistant',
+          'typing': 'typing',
+          'change_language': 'Change language',
         },
       };
 }

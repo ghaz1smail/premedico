@@ -176,6 +176,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "dio",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/dio-5.4.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "encrypt",
       "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/encrypt-5.0.3",
       "packageUri": "lib/",
@@ -290,6 +296,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_gemini",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/flutter_gemini-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3",
       "packageUri": "lib/",
@@ -342,6 +354,12 @@
       "rootUri": "file:///Users/gh0zi0/FlutterDev/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "freezed_annotation",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/freezed_annotation-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "get",
@@ -974,7 +992,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-05-22T08:48:29.098707Z",
+  "generated": "2024-05-22T10:47:45.848605Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

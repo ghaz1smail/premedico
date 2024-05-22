@@ -194,6 +194,7 @@ class AuthController extends GetxController {
         emailx = getStorage.read('email');
     if (emailx != null) {
       email.text = emailx;
+      rememberMe = true;
     }
     if (firebaseAuth.currentUser == null) {
       await Future.delayed(const Duration(seconds: 2));
@@ -223,6 +224,11 @@ class AuthController extends GetxController {
   }
 
   logOut() async {
+    var emailx = getStorage.read('email');
+    if (emailx != null) {
+      email.text = emailx;
+      rememberMe = true;
+    }
     Get.offNamed('landing');
     firebaseAuth.signOut();
     firebaseMessaging.deleteToken();

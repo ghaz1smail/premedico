@@ -15,6 +15,14 @@ class PatientDashboardScreen extends StatelessWidget {
     return GetBuilder<DashboardController>(
       builder: (dashboardController) {
         return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Get.toNamed('ai');
+            },
+            mini: true,
+            backgroundColor: appConstant.secondaryColor,
+            child: const Icon(Icons.smart_toy),
+          ),
           backgroundColor: appConstant.backgroundColor,
           bottomNavigationBar: SafeArea(
               child: Container(
