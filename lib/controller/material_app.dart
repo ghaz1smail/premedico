@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: false,
           primaryColor: appConstant.primaryColor,
           scaffoldBackgroundColor: appConstant.backgroundColor,
-          appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.transparent, elevation: 0)),
+          appBarTheme: AppBarTheme(
+              backgroundColor: appConstant.backgroundColor, elevation: 0)),
       locale: Locale(Get.find<LanguageController>().getSavedLanguage()),
       translations: Languages(),
       routes: {

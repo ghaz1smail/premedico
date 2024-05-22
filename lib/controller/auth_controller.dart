@@ -67,6 +67,11 @@ class AuthController extends GetxController {
         password: password.text,
       )
           .then((value) async {
+        if (rememberMe) {
+          getStorage.write('email', email.text);
+        } else {
+          getStorage.remove('email');
+        }
         await getUserData();
       });
     } on FirebaseAuthException catch (e) {
@@ -174,9 +179,12 @@ class AuthController extends GetxController {
   }
 
   checkToken() async {
-    var firstTime = getStorage.read('first') ?? true;
-
-    if (firebaseAuth.currentUser != null) {
+    var firstTime = getStorage.read('first') ?? true,
+        emailx = getStorage.read('email');
+    if (emailx != null) {
+      email.text = emailx;
+    }
+    if (firebaseAuth.currentUser == null) {
       await Future.delayed(const Duration(seconds: 2));
       if (firstTime) {
         Get.offNamed('onboarding');

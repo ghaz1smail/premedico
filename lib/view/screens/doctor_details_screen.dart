@@ -6,6 +6,7 @@ import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/controller/order_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/user_model.dart';
+import 'package:premedico/view/screens/book_appointment_screen.dart';
 import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:readmore/readmore.dart';
@@ -35,7 +36,11 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               child: CustomButton(
                   width: Get.width * 0.75,
                   height: 55,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => BookAppointmentScreen(
+                          doctorData: widget.doctorData,
+                        ));
+                  },
                   title: 'book_private_consultation'),
             ),
           ),
@@ -130,7 +135,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                             widget.doctorData.name.toString(),
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 16),
+                                fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 10),
@@ -145,7 +150,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                             children: [
                               const Icon(
                                 Icons.star,
-                                size: 15,
+                                size: 20,
                                 color: Colors.amber,
                               ),
                               const SizedBox(

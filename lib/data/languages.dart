@@ -121,6 +121,7 @@ class Languages extends Translations {
           'surgery_package': 'Surgery package',
           'doctor_details': 'Doctor Details',
           'about': 'About',
+          'appointment': 'Appointment',
           'hospitals': 'Hospitals',
           'book_private_consultation': 'Book Private Consultation',
         },
