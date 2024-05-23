@@ -21,10 +21,13 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar(
-      //   title: 'add_new_card'.tr,
-      // ),
-      body: Column(
+      appBar: AppBar(
+          leading: const SizedBox(),
+          title: Text(
+            'add_new_card'.tr,
+            style: const TextStyle(color: Colors.black),
+          )),
+      body: ListView(
         children: [
           CreditCardWidget(
             cardBgColor: appConstant.primaryColor,
@@ -99,49 +102,20 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
             onCreditCardModelChange: onCreditCardModelChange,
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-            ),
+            padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
             child: CustomButton(
-              onPressed: () {
+              loading: loading,
+              onPressed: () async {
                 if (!formKey.currentState!.validate()) {
                   return;
                 }
-                Get.defaultDialog(
-                    title: '',
-                    radius: 24,
-                    content: Column(
-                      children: [
-                        CircleAvatar(
-                            radius: 60,
-                            backgroundColor: appConstant.primaryColor,
-                            child: const Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: 75,
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.all(50),
-                          child: Text(
-                            'success'.tr,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        // CustomButton(
-                        //     raduis: 10,
-                        //     width: Get.width * 0.4,
-                        //     function: () {
-                        //       Get.back();
-                        //       Get.back();
-                        //     },
-                        //     title: 'back'.tr),
-                      ],
-                    ));
+                setState(() {
+                  loading = true;
+                });
+                await Future.delayed(const Duration(seconds: 2));
+                Get.back();
               },
-              title: 'add'.tr,
-              width: Get.width * 0.75,
+              title: 'pay',
             ),
           ),
         ],

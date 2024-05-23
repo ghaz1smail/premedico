@@ -5,7 +5,7 @@ import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/view/screens/home_screen.dart';
 import 'package:premedico/view/screens/profile_screen.dart';
 
-import 'calendar_screen.dart';
+import 'orders_screen.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
   const PatientDashboardScreen({super.key});
@@ -67,7 +67,7 @@ class PatientDashboardScreen extends StatelessWidget {
           )),
           body: IndexedStack(
             index: dashboardController.selectedIndex,
-            children: const [HomeScreen(), CalendarScreen(), ProfileScreen()],
+            children: const [HomeScreen(), OrdersScreen(), ProfileScreen()],
           ),
         );
       },

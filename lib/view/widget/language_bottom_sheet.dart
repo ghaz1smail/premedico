@@ -3,16 +3,11 @@ import 'package:get/get.dart';
 import 'package:premedico/controller/language_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 
-class LanguageBottomSheet extends StatefulWidget {
+class LanguageBottomSheet extends StatelessWidget {
   const LanguageBottomSheet({
     super.key,
   });
 
-  @override
-  State<LanguageBottomSheet> createState() => _LanguageBottomSheetState();
-}
-
-class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LanguageController>(

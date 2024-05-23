@@ -1,10 +1,50 @@
 import 'dart:math';
 
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:premedico/controller/auth_controller.dart';
+import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/user_model.dart';
+import 'package:premedico/view/screens/add_new_card_screen.dart';
+import 'package:premedico/view/screens/chat_screen.dart';
 
 class OrderController extends GetxController {
   DateTime dateTimePicker = DateTime.now();
   List<DateTime> randomTime = [];
+  TextEditingController note = TextEditingController();
+  double adminFee = 1;
+  String paymentMethod = 'visa';
+  bool orderingLoading = false;
+
+  createOrder(UserModel doctorData) async {
+    var id = DateTime.now().millisecondsSinceEpoch.toString();
+    orderingLoading = true;
+    update();
+    if (paymentMethod == 'visa') {
+      await Get.to(() => const AddNewCardScreen());
+    }
+
+    await firestore.collection('orders').doc(id).set({
+      'id': id,
+      'dateTime': dateTimePicker.toString(),
+      'timestamp': id,
+      'note': note.text,
+      'paymentMethod': paymentMethod,
+      'doctorData': doctorData.toJson(),
+      'userData': Get.find<AuthController>().userData!.toJson()
+    });
+
+    orderingLoading = false;
+    update();
+    Get.off(() => ChatScreen(
+          userData: doctorData,
+        ));
+  }
+
+  changePayment(x) {
+    paymentMethod = x;
+    update();
+  }
 
   pickRandomTime() {
     Random random = Random();

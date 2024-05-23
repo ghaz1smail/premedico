@@ -10,6 +10,7 @@ class UserModel {
   String? phone;
   List? favorites;
   String? rate;
+  double? price;
   String? bio;
   HospitalModel? hospital;
 
@@ -24,6 +25,7 @@ class UserModel {
     this.major,
     this.hospital,
     this.bio,
+    this.price,
     this.phone,
     this.birth,
     this.gender,
@@ -45,6 +47,7 @@ class UserModel {
       phone: json['phone'] ?? '',
       bio: json['bio'] ?? '',
       rate: json['rate'] ?? '0',
+      price: json['price'] == null ? 0 : double.parse(json['price'].toString()),
       hospital: hospitalx,
       favorites: json['favorites'] ?? [],
     );

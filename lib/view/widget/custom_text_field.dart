@@ -15,8 +15,8 @@ class CustomTextField extends StatefulWidget {
       this.validator,
       this.inputType,
       this.icon,
-      this.hint,
-      this.label,
+      required this.hint,
+      required this.label,
       this.obscure = false});
 
   @override
@@ -40,11 +40,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       keyboardType: widget.inputType,
       validator: widget.validator,
+      maxLines: 3,
+      minLines: 1,
       decoration: InputDecoration(
-        icon: Icon(
-          widget.icon,
-          color: appConstant.primaryColor,
-        ),
+        icon: widget.icon != null
+            ? Icon(
+                widget.icon,
+                color: appConstant.primaryColor,
+              )
+            : null,
         hintText: widget.hint!.tr,
         hintStyle: const TextStyle(
           color: Color.fromARGB(255, 145, 138, 138),
