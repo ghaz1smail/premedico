@@ -40,7 +40,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       keyboardType: widget.inputType,
       validator: widget.validator,
-      maxLines: 3,
+      maxLines: widget.inputType == TextInputType.multiline ? 3 : 1,
       minLines: 1,
       decoration: InputDecoration(
         icon: widget.icon != null

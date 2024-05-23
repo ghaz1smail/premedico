@@ -9,17 +9,18 @@ import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/message_model.dart';
 import 'package:premedico/model/user_model.dart';
+import 'package:premedico/view/screens/video_call_screen.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.userData});
+class MessagesScreen extends StatefulWidget {
+  const MessagesScreen({super.key, required this.userData});
   final UserModel userData;
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<MessagesScreen> createState() => _MessagesScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _MessagesScreenState extends State<MessagesScreen> {
   List<ChatMessage> messages = [];
   bool typing = false;
   Timer? _debounce;
@@ -156,9 +157,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
     await firestore
         .collection('users')
-        .doc(Get.find<AuthController>().userData!.uid)
-        .collection('chats')
         .doc(widget.userData.uid)
+        .collection('chats')
+        .doc(Get.find<AuthController>().userData!.uid)
         .set({
       'lastMessage': text ? message.text : 'image',
       'updatedAt': FieldValue.serverTimestamp(),
@@ -176,13 +177,13 @@ class _ChatScreenState extends State<ChatScreen> {
         messages.insert(
             0,
             ChatMessage(
-                medias: [
-                  if (element.type != 'text')
-                    ChatMedia(
-                        url: element.text,
-                        fileName: '${element.id}.png',
-                        type: MediaType.image),
-                ],
+                // medias: [
+                //   if (element.type != 'text')
+                //     ChatMedia(
+                //         url: element.text,
+                //         fileName: '${element.id}.png',
+                //         type: MediaType.image),
+                // ],
                 customProperties: {
                   'type': element.type,
                   'id': element.id,
@@ -220,7 +221,9 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                
+                Get.to(() => VideoCallScreen(
+                      userData: widget.userData,
+                    ));
               },
               icon: const Icon(
                 Icons.phone,
@@ -344,8 +347,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                       ],
                                     ))
                                 : Container(),
-                        // containerColor: secondryColor,
-                        // currentUserContainerColor: primaryColor,
+                        containerColor: appConstant.secondaryColor,
+                        currentUserContainerColor: appConstant.primaryColor,
                         showOtherUsersName: false,
                         showOtherUsersAvatar: false,
                         showTime: true,

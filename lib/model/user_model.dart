@@ -53,7 +53,7 @@ class UserModel {
     );
   }
 
-  Map toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'type': type,
       'name': name,
@@ -63,6 +63,7 @@ class UserModel {
       'phone': phone,
       'birth': birth,
       'gender': gender,
+      if (hospital != null) 'hospital': hospital!.toJson()
     };
   }
 }
@@ -87,5 +88,9 @@ class HospitalModel {
       id: json['id'],
       favorites: json['favorites'] ?? [],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'name': name, 'image': image, 'id': id, 'favorites': favorites};
   }
 }

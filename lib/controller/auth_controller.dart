@@ -237,12 +237,12 @@ class AuthController extends GetxController {
 
   navigator() {
     switch (userData!.type) {
-      case 'patient':
+      case 'patient' || 'doctor':
         Get.offAllNamed('patient');
         notificationPermission();
-      case 'doctor':
-        Get.offAllNamed('doctor');
-        notificationPermission();
+      // case 'doctor':
+      //   Get.offAllNamed('doctor');
+      //   notificationPermission();
       default:
         Get.offNamed('landing');
     }

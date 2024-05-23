@@ -26,7 +26,7 @@ class MessageModel {
         id: id,
         name: json['name'] ?? '',
         profile: json['profile'] ?? '',
-        timestamp: json['timestamp'] ?? Timestamp.now(),
+        timestamp: json['createdAt'],
         text: json['text'] ?? '',
         type: json['type'] ?? '',
         authorId: json['authorId'] ?? '',

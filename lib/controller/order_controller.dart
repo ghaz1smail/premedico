@@ -6,7 +6,7 @@ import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/user_model.dart';
 import 'package:premedico/view/screens/add_new_card_screen.dart';
-import 'package:premedico/view/screens/chat_screen.dart';
+import 'package:premedico/view/screens/messages_screen.dart';
 
 class OrderController extends GetxController {
   DateTime dateTimePicker = DateTime.now();
@@ -36,7 +36,7 @@ class OrderController extends GetxController {
 
     orderingLoading = false;
     update();
-    Get.off(() => ChatScreen(
+    Get.off(() => MessagesScreen(
           userData: doctorData,
         ));
   }

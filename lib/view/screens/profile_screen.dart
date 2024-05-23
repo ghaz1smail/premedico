@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/view/screens/all_top_favourite_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -49,6 +50,11 @@ class ProfileScreen extends StatelessWidget {
                   height: 10,
                 ),
                 ListTile(
+                  onTap: () {
+                    Get.to(() => const AllTopFavouriteScreen(
+                          top: false,
+                        ));
+                  },
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
                     backgroundColor: appConstant.primaryColor.withOpacity(0.1),

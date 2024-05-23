@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/view/screens/all_top_favourite_screen.dart';
+import 'package:premedico/view/screens/chats_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/favourite_doctors_list.dart';
 import 'package:premedico/view/widget/top_doctors_list.dart';
@@ -46,6 +47,7 @@ class HomeScreen extends StatelessWidget {
                       trailing: InkWell(
                         onTap: () {
                           Get.toNamed('notifications');
+                          // Get.to(() => const ChatsScreen());
                         },
                         child: Container(
                           padding: const EdgeInsets.all(5),
