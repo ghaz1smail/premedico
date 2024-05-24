@@ -193,6 +193,12 @@ class Languages extends Translations {
           'add_new_card': 'Add new card',
           'type_message': 'Type message...',
           'change_language': 'Change language',
+          'consultion_start': 'Consultion start',
+          'you_can_consult_your_problem_to_the_doctor':
+              'You can consult your problem to the doctor',
+          'send': 'Send',
+          'no_data': 'No data',
+          'private_conseltation': 'Private conseltation',
         },
       };
 }

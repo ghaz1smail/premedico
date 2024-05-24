@@ -10,6 +10,7 @@ import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/message_model.dart';
 import 'package:premedico/model/user_model.dart';
 import 'package:premedico/view/screens/video_call_screen.dart';
+import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
 class MessagesScreen extends StatefulWidget {
@@ -110,7 +111,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   sendMessage(ChatMessage message) async {
-    String url = '', id = message.createdAt.millisecondsSinceEpoch.toString();
+    String url = '', id = message.customProperties!['id'];
     bool text = message.text.isNotEmpty;
     await firestore
         .collection('users')
@@ -172,8 +173,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
   loadData(List<MessageModel> x) async {
     for (var element in x) {
       if (!messages
-          .map((e) => e.createdAt.millisecondsSinceEpoch)
-          .contains(element.timestamp!.toDate().millisecondsSinceEpoch)) {
+          .map((e) => e.customProperties!['id'])
+          .contains(element.id)) {
         messages.insert(
             0,
             ChatMessage(
@@ -205,10 +206,44 @@ class _MessagesScreenState extends State<MessagesScreen> {
     super.dispose();
   }
 
+  showMessage() async {
+    await Future.delayed(const Duration(milliseconds: 10));
+    Get.showSnackbar(GetSnackBar(
+      snackStyle: SnackStyle.FLOATING,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      borderRadius: 10,
+      duration: const Duration(seconds: 5),
+      backgroundColor: Colors.white,
+      boxShadows: const [
+        BoxShadow(blurRadius: 5, spreadRadius: 0.1, color: Colors.black12)
+      ],
+      messageText: Text(
+        'you_can_consult_your_problem_to_the_doctor'.tr,
+        textAlign: TextAlign.center,
+      ),
+      titleText: Text(
+        'consultion_start'.tr,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: appConstant.primaryColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w600),
+      ),
+      snackPosition: SnackPosition.TOP,
+    ));
+  }
+
+  @override
+  void initState() {
+    showMessage();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         toolbarHeight: 50,
         leading: IconButton(
             onPressed: () {
@@ -357,12 +392,39 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         },
                       ),
                       inputOptions: InputOptions(
-                        inputDecoration:
-                            defaultInputDecoration(hintText: 'type_message'.tr),
-                        inputToolbarMargin: EdgeInsets.zero,
+                        cursorStyle:
+                            CursorStyle(color: appConstant.primaryColor),
+                        inputDecoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'type_message'.tr,
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: appConstant.primaryColor),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100))),
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)))),
+                        alwaysShowSend: true,
+                        sendButtonBuilder: (send) => Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: CustomButton(
+                              onPressed: () {
+                                send();
+                              },
+                              title: 'send',
+                              width: 100,
+                            ),
+                          ),
+                        ),
+                        inputToolbarMargin: const EdgeInsets.only(top: 20),
                         inputToolbarPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
+                            const EdgeInsets.symmetric(horizontal: 20),
                         onTextChange: (value) {
+                          Get.closeCurrentSnackbar();
                           onTextChanged();
                         },
                       ),
@@ -371,6 +433,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       onSend: (ChatMessage m) {
                         ChatMessage x = ChatMessage(
                             text: m.text,
+                            customProperties: {
+                              'id': Timestamp.now()
+                                  .millisecondsSinceEpoch
+                                  .toString()
+                            },
                             user: ChatUser(
                                 id: Get.find<AuthController>().userData!.uid!),
                             status: MessageStatus.sent,

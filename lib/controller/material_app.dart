@@ -11,6 +11,7 @@ import 'package:premedico/view/screens/doctor_dashboard_screen.dart';
 import 'package:premedico/view/screens/hospitals_screen.dart';
 import 'package:premedico/view/screens/login_screen.dart';
 import 'package:premedico/view/screens/notifications_screen.dart';
+import 'package:premedico/view/screens/orders_screen.dart';
 import 'package:premedico/view/screens/patient_dashboard_screen.dart';
 import 'package:premedico/view/screens/p_signup_screen.dart';
 import 'package:premedico/view/screens/landing_screen.dart';
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
           primaryColor: appConstant.primaryColor,
           scaffoldBackgroundColor: appConstant.backgroundColor,
           appBarTheme: AppBarTheme(
-              backgroundColor: appConstant.backgroundColor, elevation: 0)),
+              centerTitle: true,
+              backgroundColor: appConstant.backgroundColor,
+              elevation: 0)),
       locale: Locale(Get.find<LanguageController>().getSavedLanguage()),
       translations: Languages(),
       routes: {
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
         "hospitals": (context) => const HospitalsScreen(),
         "settings": (context) => const SettingsScreen(),
         "ai": (context) => const AiChatScreen(),
+        "ordersScreen": (context) => const OrdersScreen(),
       },
       home: const SplashScreen(),
     );

@@ -78,6 +78,7 @@ class BookAppointmentScreen extends StatelessWidget {
             child: ListView(
               children: [
                 Container(
+                  width: Get.width,
                   margin: const EdgeInsets.only(top: 5),
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
@@ -101,39 +102,42 @@ class BookAppointmentScreen extends StatelessWidget {
                           boxFit: BoxFit.contain,
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            doctorData.name.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
-                            child: Text(
-                              '${doctorData.major} | ${doctorData.hospital == null ? '' : doctorData.hospital!.name}',
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              doctorData.name.toString(),
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.grey.shade700, fontSize: 12),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 18),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                size: 20,
-                                color: Colors.amber,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 5, bottom: 10),
+                              child: Text(
+                                '${doctorData.major} | ${doctorData.hospital == null ? '' : doctorData.hospital!.name}',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700, fontSize: 12),
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(doctorData.rate.toString()),
-                            ],
-                          )
-                        ],
+                            ),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  size: 20,
+                                  color: Colors.amber,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(doctorData.rate.toString()),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

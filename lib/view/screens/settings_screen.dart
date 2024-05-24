@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
-import 'package:premedico/view/widget/language_bottom_sheet.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -53,6 +52,18 @@ class SettingsScreen extends StatelessWidget {
                     leading: CircleAvatar(
                       backgroundColor:
                           appConstant.primaryColor.withOpacity(0.1),
+                      child: Icon(Icons.edit, color: appConstant.primaryColor),
+                    ),
+                    title: Text('edit_profile'.tr),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: CircleAvatar(
+                      backgroundColor:
+                          appConstant.primaryColor.withOpacity(0.1),
                       child: Icon(Icons.key, color: appConstant.primaryColor),
                     ),
                     title: Text('password_manger'.tr),
@@ -61,17 +72,13 @@ class SettingsScreen extends StatelessWidget {
                     height: 10,
                   ),
                   ListTile(
-                    onTap: () {
-                      customBottomSheet(const LanguageBottomSheet());
-                    },
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
                       backgroundColor:
                           appConstant.primaryColor.withOpacity(0.1),
-                      child:
-                          Icon(Icons.language, color: appConstant.primaryColor),
+                      child: Icon(Icons.lock, color: appConstant.primaryColor),
                     ),
-                    title: Text('change_language'.tr),
+                    title: Text('privacy_policy'.tr),
                   ),
                   const SizedBox(
                     height: 10,

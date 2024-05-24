@@ -1,91 +1,37 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:premedico/controller/auth_controller.dart';
+import 'package:premedico/controller/dashboard_controller.dart';
 import 'package:premedico/data/get_initial.dart';
-import 'package:premedico/view/screens/all_top_favourite_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
-import 'package:premedico/view/widget/favourite_doctors_list.dart';
-import 'package:premedico/view/widget/top_doctors_list.dart';
+import 'package:premedico/view/screens/doctors_list_screen.dart';
+import 'package:premedico/view/widget/top_doctors_grid.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthController>(
+    return GetBuilder<DashboardController>(
       builder: (controller) {
         return Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              decoration: BoxDecoration(
-                  color: appConstant.primaryColor,
-                  borderRadius:
-                      const BorderRadius.vertical(bottom: Radius.circular(15))),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: CustomImage(
-                        url: controller.userData!.image!,
-                      ),
-                      title: Text(
-                        'welcome'.tr,
-                        style: TextStyle(
-                            fontSize: 14, color: appConstant.backgroundColor),
-                      ),
-                      subtitle: Text(
-                        controller.userData!.name!,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: appConstant.backgroundColor,
-                            fontSize: 16),
-                      ),
-                      trailing: InkWell(
-                        onTap: () {
-                          Get.toNamed('notifications');
-                          // Get.to(() => const ChatsScreen());
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 0.5,
-                                  color: appConstant.backgroundColor),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: Icon(
-                            Icons.notifications,
-                            color: appConstant.backgroundColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CupertinoSearchTextField(
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 5),
-                        child: Icon(
-                          CupertinoIcons.search,
-                          color: appConstant.backgroundColor,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 15),
-                      placeholder: 'search_doctors_hospitals'.tr,
-                      placeholderStyle: const TextStyle(color: Colors.white60),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                          border: Border.all(
-                            color: appConstant.backgroundColor,
-                          )),
-                    )
-                  ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: CupertinoSearchTextField(
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 5),
+                  child:
+                      Icon(CupertinoIcons.search, color: Colors.grey.shade500),
+                ),
+                padding: const EdgeInsets.all(10),
+                placeholder: 'search_doctors_hospitals'.tr,
+                placeholderStyle: TextStyle(color: Colors.grey.shade500),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
               ),
             ),
@@ -99,147 +45,126 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   children: [
                     Container(
-                      color: appConstant.backgroundColor,
-                      child: Column(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      width: Get.width,
+                      height: Get.height * .17,
+                      child: Stack(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            child: Card(
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Get.toNamed('callAmbulance');
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/ambulance.png',
-                                            height: 50,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            'call_ambulance'.tr,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 12),
-                                          )
-                                        ],
+                          SizedBox(
+                            width: Get.width,
+                            child: CarouselSlider.builder(
+                              itemCount: controller.banner.length,
+                              itemBuilder: (BuildContext context, int itemIndex,
+                                      int pageViewIndex) =>
+                                  Container(
+                                      alignment: Alignment.center,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
                                       ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Get.toNamed('hospitals');
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/hospital.png',
-                                            height: 50,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            'hospitals'.tr,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 12),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Get.toNamed('surgeryPackage');
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/package.png',
-                                            height: 50,
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            'surgery_package'.tr,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 12),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                      child: CustomImage(
+                                        radius: 0,
+                                        url: controller.banner[itemIndex],
+                                        width: Get.width,
+                                        boxFit: BoxFit.fill,
+                                      )),
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                viewportFraction: 1,
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) {
+                                  controller.changeBannerIndex(index);
+                                },
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 10,
+                            child: SizedBox(
+                              width: Get.width,
+                              child: Align(
+                                child: AnimatedSmoothIndicator(
+                                  activeIndex: controller.bannerIndex,
+                                  count: controller.banner.length,
+                                  effect: ScrollingDotsEffect(
+                                      dotWidth: 6,
+                                      dotHeight: 6,
+                                      activeDotColor: appConstant.primaryColor),
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'favourite_doctors'.tr,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      Get.to(() => const AllTopFavouriteScreen(
-                                            top: false,
-                                          ));
-                                    },
-                                    child: Text(
-                                      'see_all'.tr,
-                                      style: TextStyle(
-                                          color: appConstant.secondaryColor),
-                                    ))
-                              ],
-                            ),
-                          ),
-                          const FavouriteDoctorsList(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'top_doctors'.tr,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      Get.to(
-                                          () => const AllTopFavouriteScreen());
-                                    },
-                                    child: Text(
-                                      'see_all'.tr,
-                                      style: TextStyle(
-                                          color: appConstant.secondaryColor),
-                                    ))
-                              ],
-                            ),
-                          ),
-                          const TopDoctorsList()
                         ],
                       ),
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed('callAmbulance');
+                          },
+                          child: Chip(
+                            label: Text(
+                              'call_ambulance'.tr,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 12),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed('ai');
+                          },
+                          child: Chip(
+                            label: Text(
+                              'AI_assistant'.tr,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 12),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed('ordersScreen');
+                          },
+                          child: Chip(
+                            label: Text(
+                              'private_conseltation'.tr,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'top_doctors'.tr,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Get.to(() => const DoctorsListScreen());
+                              },
+                              child: Text(
+                                'see_all'.tr,
+                                style: TextStyle(
+                                    color: appConstant.secondaryColor),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        height: 400,
+                        width: Get.width,
+                        child: const TopDoctorsGrid())
                   ],
                 ),
               ),

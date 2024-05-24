@@ -115,53 +115,60 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView(
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: CustomImage(
-                          url: widget.doctorData.image ?? '',
-                          width: 100,
-                          height: 100,
-                          radius: 10,
-                          boxFit: BoxFit.contain,
+                  SizedBox(
+                    width: Get.width,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: CustomImage(
+                            url: widget.doctorData.image ?? '',
+                            width: 100,
+                            height: 100,
+                            radius: 10,
+                            boxFit: BoxFit.contain,
+                          ),
                         ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.doctorData.name.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
-                            child: Text(
-                              '${widget.doctorData.major} | ${widget.doctorData.hospital == null ? '' : widget.doctorData.hospital!.name}',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.grey.shade700, fontSize: 12),
-                            ),
-                          ),
-                          Row(
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(
-                                Icons.star,
-                                size: 20,
-                                color: Colors.amber,
+                              Text(
+                                widget.doctorData.name.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 18),
                               ),
-                              const SizedBox(
-                                width: 5,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 10),
+                                child: Text(
+                                  '${widget.doctorData.major} | ${widget.doctorData.hospital == null ? '' : widget.doctorData.hospital!.name}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontSize: 12),
+                                ),
                               ),
-                              Text(widget.doctorData.rate.toString()),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                    size: 20,
+                                    color: Colors.amber,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(widget.doctorData.rate.toString()),
+                                ],
+                              )
                             ],
-                          )
-                        ],
-                      ),
-                    ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   if (widget.doctorData.bio!.isNotEmpty)
                     Padding(

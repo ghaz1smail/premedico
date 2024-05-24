@@ -8,49 +8,61 @@ import 'package:premedico/view/screens/doctor_details_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/custom_shimmer.dart';
 
-class FavouriteDoctorsList extends StatefulWidget {
-  const FavouriteDoctorsList({super.key});
+class TopDoctorsGrid extends StatefulWidget {
+  const TopDoctorsGrid({super.key});
 
   @override
-  State<FavouriteDoctorsList> createState() => _FavouriteDoctorsListState();
+  State<TopDoctorsGrid> createState() => _TopDoctorsGridState();
 }
 
-class _FavouriteDoctorsListState extends State<FavouriteDoctorsList> {
+class _TopDoctorsGridState extends State<TopDoctorsGrid> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 175,
-        width: Get.width,
-        child: StreamBuilder(
-          stream: firestore
-              .collection('users')
-              .where('type', isEqualTo: 'doctor')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<UserModel> doctors = snapshot.data!.docs
-                  .map((e) => UserModel.fromJson(e.data()))
-                  .toList();
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: doctors.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  var userData = doctors[index];
-                  return favouriteDoctorWidget(userData);
-                },
-              );
-            }
-            return ListView.builder(
+    return StreamBuilder(
+      stream: firestore
+          .collection('users')
+          .where('type', isEqualTo: 'doctor')
+          .limit(4)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<UserModel> doctors = snapshot.data!.docs
+              .map((e) => UserModel.fromJson(e.data()))
+              .toList();
+          return Center(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 1.1,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 25),
               shrinkWrap: true,
-              itemCount: 3,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: doctors.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return CustomShimmer(child: favouriteDoctorWidget(UserModel()));
+                var userData = doctors[index];
+                return favouriteDoctorWidget(userData);
               },
-            );
+            ),
+          );
+        }
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 1.1,
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 25),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 4,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return CustomShimmer(child: favouriteDoctorWidget(UserModel()));
           },
-        ));
+        );
+      },
+    );
   }
 
   Widget favouriteDoctorWidget(UserModel userData) {
@@ -59,9 +71,6 @@ class _FavouriteDoctorsListState extends State<FavouriteDoctorsList> {
         Get.to(() => DoctorDetailsScreen(doctorData: userData));
       },
       child: Container(
-        width: 175,
-        height: 175,
-        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(blurRadius: 5, spreadRadius: 0.5, color: Colors.black12)
@@ -72,15 +81,15 @@ class _FavouriteDoctorsListState extends State<FavouriteDoctorsList> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 175,
+              width: Get.width * 0.5,
               height: 100,
               child: Stack(
                 children: [
                   CustomImage(
                     url: userData.image ?? '',
-                    width: 175,
-                    radius: 15,
-                    boxFit: BoxFit.cover,
+                    width: Get.width * 0.5,
+                    radius: 10,
+                    boxFit: BoxFit.fill,
                   ),
                   if (userData.favorites != null)
                     Positioned(
@@ -122,18 +131,26 @@ class _FavouriteDoctorsListState extends State<FavouriteDoctorsList> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Text(
+                userData.name.toString(),
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                '${userData.major} | ${userData.hospital == null ? '' : userData.hospital!.name}',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      userData.name.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 16),
-                    ),
-                  ),
                   const Icon(
                     Icons.star,
                     size: 15,
@@ -146,14 +163,6 @@ class _FavouriteDoctorsListState extends State<FavouriteDoctorsList> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                '${userData.major} | ${userData.hospital == null ? '' : userData.hospital!.name}',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
-              ),
-            )
           ],
         ),
       ),

@@ -8,48 +8,80 @@ import 'package:premedico/view/screens/doctor_details_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/custom_shimmer.dart';
 
-class TopDoctorsList extends StatefulWidget {
-  final bool top;
-  const TopDoctorsList({super.key, this.top = true});
+class DoctorsListScreen extends StatefulWidget {
+  final bool showBar;
+  const DoctorsListScreen({super.key, this.showBar = true});
 
   @override
-  State<TopDoctorsList> createState() => _TopDoctorsListState();
+  State<DoctorsListScreen> createState() => _DoctorsListScreenState();
 }
 
-class _TopDoctorsListState extends State<TopDoctorsList> {
+class _DoctorsListScreenState extends State<DoctorsListScreen> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: firestore
-            .collection('users')
-            .where('type', isEqualTo: 'doctor')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<UserModel> doctors = snapshot.data!.docs
-                .map((e) => UserModel.fromJson(e.data()))
-                .toList();
+    return Scaffold(
+      appBar: widget.showBar
+          ? AppBar(
+              title: Text(
+                'top_doctors'.tr,
+                style: TextStyle(
+                    color: appConstant.primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  )))
+          : null,
+      body: StreamBuilder(
+          stream: widget.showBar
+              ? firestore
+                  .collection('users')
+                  .where('type', isEqualTo: 'doctor')
+                  .snapshots()
+              : firestore.collection('users').where('favorites',
+                  arrayContainsAny: [
+                      Get.find<AuthController>().userData!.uid
+                    ]).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<UserModel> doctors = snapshot.data!.docs
+                  .map((e) => UserModel.fromJson(e.data()))
+                  .toList();
+              if (doctors.isEmpty) {
+                return Center(
+                  child: Text(
+                    'no_data'.tr,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                );
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: doctors.length,
+                itemBuilder: (context, index) {
+                  var userData = doctors[index];
+                  return topDoctorWidget(userData);
+                },
+              );
+            }
             return ListView.builder(
               shrinkWrap: true,
+              itemCount: 3,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: doctors.length,
               itemBuilder: (context, index) {
-                var userData = doctors[index];
-                return topDoctorWidget(userData);
+                return CustomShimmer(child: topDoctorWidget(UserModel()));
               },
             );
-          }
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: 3,
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return CustomShimmer(child: topDoctorWidget(UserModel()));
-            },
-          );
-        });
+          }),
+    );
   }
 
   Widget topDoctorWidget(UserModel userData) {

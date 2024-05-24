@@ -7,37 +7,57 @@ import 'package:premedico/view/screens/messages_screen.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
 class OrdersScreen extends StatelessWidget {
-  const OrdersScreen({super.key});
+  final bool showBar;
+  const OrdersScreen({super.key, this.showBar = true});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: firestore
-          .collection('orders')
-          .where('userData.uid',
-              isEqualTo: Get.find<AuthController>().userData!.uid)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          var list = snapshot.data!.docs
-              .map((e) => OrderModel.fromJson(e.data()))
-              .toList();
+    return Scaffold(
+      appBar: showBar
+          ? AppBar(
+              title: Text(
+                'private_conseltation'.tr,
+                style: TextStyle(
+                    color: appConstant.primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  )))
+          : null,
+      body: StreamBuilder(
+        stream: firestore
+            .collection('orders')
+            .where('userData.uid',
+                isEqualTo: Get.find<AuthController>().userData!.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var list = snapshot.data!.docs
+                .map((e) => OrderModel.fromJson(e.data()))
+                .toList();
 
-          return ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              var data = list[index];
-              return ListTile(
-                title: Text(data.id),
-                onTap: () {
-                  Get.to(() => MessagesScreen(userData: data.doctorData));
-                },
-              );
-            },
-          );
-        }
-        return const CustomLoading();
-      },
+            return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                var data = list[index];
+                return ListTile(
+                  title: Text(data.id),
+                  onTap: () {
+                    Get.to(() => MessagesScreen(userData: data.doctorData));
+                  },
+                );
+              },
+            );
+          }
+          return const CustomLoading();
+        },
+      ),
     );
   }
 }

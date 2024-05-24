@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/dashboard_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/view/screens/doctors_list_screen.dart';
 import 'package:premedico/view/screens/home_screen.dart';
-import 'package:premedico/view/screens/profile_screen.dart';
-
+import 'package:premedico/view/widget/custom_drawer.dart';
 import 'orders_screen.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
@@ -15,14 +15,29 @@ class PatientDashboardScreen extends StatelessWidget {
     return GetBuilder<DashboardController>(
       builder: (dashboardController) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Get.toNamed('ai');
-            },
-            mini: true,
-            backgroundColor: appConstant.secondaryColor,
-            child: const Icon(Icons.smart_toy),
+          appBar: AppBar(
+            leading: Builder(builder: (context) {
+              return IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ));
+            }),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.toNamed('notifications');
+                  },
+                  icon: const Icon(
+                    Icons.notifications,
+                    color: Colors.black,
+                  ))
+            ],
           ),
+          drawer: const CustomDrawer(),
           backgroundColor: appConstant.backgroundColor,
           bottomNavigationBar: SafeArea(
               child: Container(
@@ -67,7 +82,15 @@ class PatientDashboardScreen extends StatelessWidget {
           )),
           body: IndexedStack(
             index: dashboardController.selectedIndex,
-            children: const [HomeScreen(), OrdersScreen(), ProfileScreen()],
+            children: const [
+              HomeScreen(),
+              DoctorsListScreen(
+                showBar: false,
+              ),
+              OrdersScreen(
+                showBar: false,
+              ),
+            ],
           ),
         );
       },
