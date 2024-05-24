@@ -160,9 +160,8 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        height: 400,
+                    SizedBox(
+                        height: 425,
                         width: Get.width,
                         child: const TopDoctorsGrid())
                   ],

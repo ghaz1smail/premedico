@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/view/widget/custom_loading.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -22,6 +24,24 @@ class NotificationsScreen extends StatelessWidget {
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ))),
+      body: StreamBuilder(
+        stream: firestore
+            .collection('users')
+            .doc(Get.find<AuthController>().userData!.uid)
+            .collection('notifications')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: 0,
+              itemBuilder: (context, index) {
+                return Container();
+              },
+            );
+          }
+          return const CustomLoading();
+        },
+      ),
     );
   }
 }

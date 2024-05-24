@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/dashboard_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/view/screens/chats_screen.dart';
 import 'package:premedico/view/screens/doctors_list_screen.dart';
 import 'package:premedico/view/screens/home_screen.dart';
 import 'package:premedico/view/widget/custom_drawer.dart';
-import 'orders_screen.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
   const PatientDashboardScreen({super.key});
@@ -87,9 +87,7 @@ class PatientDashboardScreen extends StatelessWidget {
               DoctorsListScreen(
                 showBar: false,
               ),
-              OrdersScreen(
-                showBar: false,
-              ),
+              ChatsScreen()
             ],
           ),
         );

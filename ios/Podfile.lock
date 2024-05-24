@@ -125,6 +125,10 @@ PODS:
     - ZIPFoundation
   - flutter_vibrate (0.0.1):
     - Flutter
+  - geocoding_ios (1.0.5):
+    - Flutter
+  - geolocator_apple (1.2.0):
+    - Flutter
   - google_maps_flutter_ios (0.0.1):
     - Flutter
     - GoogleMaps (< 9.0, >= 8.4)
@@ -232,6 +236,8 @@ DEPENDENCIES:
   - flutter_credit_card (from `.symlinks/plugins/flutter_credit_card/ios`)
   - flutter_logs (from `.symlinks/plugins/flutter_logs/ios`)
   - flutter_vibrate (from `.symlinks/plugins/flutter_vibrate/ios`)
+  - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - is_lock_screen2 (from `.symlinks/plugins/is_lock_screen2/ios`)
   - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
@@ -311,6 +317,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_logs/ios"
   flutter_vibrate:
     :path: ".symlinks/plugins/flutter_vibrate/ios"
+  geocoding_ios:
+    :path: ".symlinks/plugins/geocoding_ios/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
   google_maps_flutter_ios:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   is_lock_screen2:
@@ -384,6 +394,8 @@ SPEC CHECKSUMS:
   flutter_credit_card: 48fb35065294868bc6a3e7f18a42f28929b84f48
   flutter_logs: 5d0dca26963e0f30b11a995a764744ef77d5d428
   flutter_vibrate: 9f4c2ab57008965f78969472367c329dd77eb801
+  geocoding_ios: d7460f56e80e118d57678efe5c2cdc888739ff18
+  geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
   google_maps_flutter_ios: c454f18e0e22df6ac0e9f2a4df340858f5a3680c
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d

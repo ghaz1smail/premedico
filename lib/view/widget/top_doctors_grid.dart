@@ -82,14 +82,14 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
           children: [
             SizedBox(
               width: Get.width * 0.5,
-              height: 100,
+              height: 110,
               child: Stack(
                 children: [
                   CustomImage(
                     url: userData.image ?? '',
                     width: Get.width * 0.5,
                     radius: 10,
-                    boxFit: BoxFit.fill,
+                    boxFit: BoxFit.cover,
                   ),
                   if (userData.favorites != null)
                     Positioned(

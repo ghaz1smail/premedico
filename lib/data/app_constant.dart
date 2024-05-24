@@ -11,6 +11,7 @@ class AppConstant {
   final zegoAppSign =
       'f397e84acfbf91fd0c8d81e8bede30d06443abb97d9bc6729f29872be371f17b';
   final zegoappID = 403748782;
+  final androidGoogleMapKey = 'AIzaSyCVs68O8ytrRteAKCN9VSo4rnjjalEd-mk';
 
   sendNotification() async {
     Dio dio = Dio();
