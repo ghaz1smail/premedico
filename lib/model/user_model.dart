@@ -13,6 +13,7 @@ class UserModel {
   double? price;
   String? bio;
   HospitalModel? hospital;
+  bool online;
 
   UserModel({
     this.type,
@@ -29,6 +30,7 @@ class UserModel {
     this.phone,
     this.birth,
     this.gender,
+    this.online = false,
   });
 
   factory UserModel.fromJson(Map json) {
@@ -45,9 +47,14 @@ class UserModel {
               : json['image'],
       email: json['email'] ?? '',
       uid: json['uid'],
+      online: json['online'] ?? false,
       major: json['major'] ?? '',
       gender: json['gender'] ?? '',
-      birth: json['birth'] ?? '',
+      birth: json['birth'] == null
+          ? DateTime.now().toString()
+          : json['birth'].toString().isEmpty
+              ? DateTime.now().toString()
+              : json['image'],
       phone: json['phone'] ?? '',
       bio: json['bio'] ?? '',
       rate: json['rate'] ?? '0',

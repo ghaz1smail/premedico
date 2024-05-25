@@ -48,6 +48,9 @@ class SettingsScreen extends StatelessWidget {
                     height: 10,
                   ),
                   ListTile(
+                    onTap: () {
+                      Get.toNamed('editProfile');
+                    },
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
                       backgroundColor:

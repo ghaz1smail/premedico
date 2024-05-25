@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/user_model.dart';
 
@@ -12,15 +16,57 @@ class AuthController extends GetxController {
       email = TextEditingController(),
       username = TextEditingController(),
       password = TextEditingController(),
+      birth = TextEditingController(),
       major = TextEditingController(),
+      phone = TextEditingController(),
       years = TextEditingController(),
       conPassword = TextEditingController();
   bool notification = false,
+      loading = false,
       signupLoading = false,
       loginLoading = false,
       rememberMe = false;
+  DateTime date = DateTime.now();
   String type = 'patient';
   UserModel? userData;
+  File? imageFile;
+
+  getProfileData() {
+    loading = true;
+
+    name.text = userData!.name!;
+    phone.text = userData!.phone!;
+    date = DateTime.parse(userData!.birth!);
+    birth.text = DateFormat.yMMMMd().format(date);
+    loading = false;
+  }
+
+  selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: Get.context!,
+      initialDate: date,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (picked != null) {
+      birth.text = DateFormat.yMMMMd().format(picked);
+      date = picked;
+
+      update();
+    }
+  }
+
+  updateProfile() {}
+
+  pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      update();
+    }
+  }
 
   resetPassword() async {
     if (!forget.currentState!.validate()) {
@@ -183,6 +229,7 @@ class AuthController extends GetxController {
       'gender': '',
       'birth': '',
       'phone': '',
+      'online': true,
       'uid': firebaseAuth.currentUser!.uid,
       'type': type,
       'years': years.text,

@@ -219,6 +219,10 @@ class Languages extends Translations {
           'years_of_experence': 'Years of experence',
           'enter_years_of_experence': 'Enter years of experence',
           'please_enter_years_of_experence': 'Please nter years of experence',
+          'update': 'Update',
+          'date_of_birth': 'Date of birth',
+          'phone_number': 'Phone number',
+          'enter_phone_number': 'Enter phone number',
         },
       };
 }

@@ -9,12 +9,14 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? inputType;
   final String? hint, label;
   final bool obscure;
+  final Function? onTap;
   const CustomTextField(
       {super.key,
       this.controller,
       this.validator,
       this.inputType,
       this.icon,
+      this.onTap,
       required this.hint,
       required this.label,
       this.obscure = false});
@@ -35,6 +37,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: () {
+        if (widget.onTap != null) {
+          widget.onTap!();
+        }
+      },
       obscureText: widget.obscure ? showPass : false,
       autocorrect: false,
       controller: widget.controller,
@@ -42,6 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       maxLines: widget.inputType == TextInputType.multiline ? 3 : 1,
       minLines: 1,
+      readOnly: widget.onTap != null,
       decoration: InputDecoration(
         icon: widget.icon != null
             ? Icon(
