@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,7 +22,7 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
 
   @override
   void initState() {
-    dashboardController.getUserLoaction();
+    dashboardController.getUserLoaction(isloading: false);
 
     super.initState();
   }
@@ -38,8 +37,8 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: GetBuilder<DashboardController>(
-      builder: (orderController) {
-        return orderController.locationLoading
+      builder: (mapController) {
+        return mapController.locationLoading
             ? const CustomLoading()
             : SizedBox(
                 height: Get.height,
@@ -47,14 +46,16 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                 child: Stack(
                   children: [
                     GoogleMap(
+                      markers: Set<Marker>.of(mapController.markers.values),
                       initialCameraPosition: CameraPosition(
-                          target: dashboardController.userLocation!, zoom: 16),
+                          target: dashboardController.userLocation ??
+                              const LatLng(0, 0),
+                          zoom: 16),
                       onMapCreated: (GoogleMapController controller) {
-                        if (orderController.googleController == null) {
-                          orderController.googleController =
+                        if (mapController.googleController == null) {
+                          mapController.googleController =
                               Completer<GoogleMapController>();
-                          orderController.googleController!
-                              .complete(controller);
+                          mapController.googleController!.complete(controller);
                         }
                       },
                       onCameraMove: (position) {
@@ -70,93 +71,72 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                       child: SafeArea(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
+                          child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 45,
-                                    width: 45,
-                                    margin: const EdgeInsets.only(right: 20),
-                                    decoration: const BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              blurRadius: 5,
-                                              color: Colors.black12)
-                                        ],
-                                        color: Colors.white,
-                                        shape: BoxShape.circle),
-                                    // child: IconBack(
-                                    //   function: () async {
-                                    //     if (orderController.nextLocation) {
-                                    //       orderController.animateMap(
-                                    //           orderController.userAddress!.lat!,
-                                    //           orderController
-                                    //               .userAddress!.long!);
-                                    //     }
-                                    //     orderController.changeStatus(
-                                    //         !orderController.nextLocation,
-                                    //         back:
-                                    //             !orderController.nextLocation);
-                                    //   },
-                                    // ),
-                                  ),
-                                  Flexible(
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                          boxShadow: []),
-                                      child:
-                                          GooglePlacesAutoCompleteTextFormField(
-                                        textEditingController:
-                                            orderController.searchController,
-                                        googleAPIKey:
-                                            appConstant.androidGoogleMapKey,
-                                        debounceTime: 400,
-                                        countries: const ["jo"],
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 10),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: const OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15))),
-                                            hintText: 'search_address'.tr),
-                                        itmClick: (postalCodeResponse) {},
-                                        getPlaceDetailWithLatLng: (prediction) {
-                                          orderController.searchController
-                                              .text = prediction.description!;
-                                          orderController
-                                                  .searchController.selection =
-                                              TextSelection.fromPosition(
-                                                  TextPosition(
-                                                      offset: prediction
-                                                          .description!
-                                                          .length));
+                              Container(
+                                  height: 45,
+                                  width: 45,
+                                  margin: const EdgeInsets.only(right: 20),
+                                  decoration: const BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 5,
+                                            color: Colors.black12)
+                                      ],
+                                      color: Colors.white,
+                                      shape: BoxShape.circle),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      icon: const Icon(Icons.arrow_back))),
+                              Flexible(
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.black12,
+                                            spreadRadius: 0.1,
+                                            blurRadius: 5)
+                                      ]),
+                                  child: GooglePlacesAutoCompleteTextFormField(
+                                    textEditingController:
+                                        mapController.searchController,
+                                    googleAPIKey:
+                                        appConstant.androidGoogleMapKey,
+                                    debounceTime: 400,
+                                    countries: const ["jo"],
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: const OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        hintText: 'search_address'.tr),
+                                    itmClick: (postalCodeResponse) {},
+                                    getPlaceDetailWithLatLng: (prediction) {
+                                      mapController.searchController.text =
+                                          prediction.description!;
+                                      mapController.searchController.selection =
+                                          TextSelection.fromPosition(
+                                              TextPosition(
+                                                  offset: prediction
+                                                      .description!.length));
 
-                                          dashboardController.animateMap(
-                                            double.parse(prediction.lat!),
-                                            double.parse(prediction.lng!),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                      dashboardController.animateMap(
+                                        double.parse(prediction.lat!),
+                                        double.parse(prediction.lng!),
+                                      );
+                                    },
                                   ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Chip(
-                                label: Text(
-                                  'Pick the location of the service provided',
-                                  style: TextStyle(fontSize: 16),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -172,20 +152,22 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                             children: [
                               CustomButton(
                                 onPressed: () async {
-                                  orderController.searchController.clear();
+                                  mapController.searchController.clear();
+
+                                  mapController.callAmbulance();
                                 },
-                                title: 'confirm'.tr,
-                                loading: orderController.loading,
+                                title: 'call_ambulance',
+                                loading: mapController.loading,
                                 width: Get.width * 0.75,
                               ),
                               FloatingActionButton(
                                 onPressed: () {
-                                  if (!orderController.loadingCenter) {
-                                    orderController.center();
+                                  if (!mapController.loadingCenter) {
+                                    mapController.center();
                                   }
                                 },
                                 backgroundColor: appConstant.primaryColor,
-                                child: orderController.loadingCenter
+                                child: mapController.loadingCenter
                                     ? const CircularProgressIndicator(
                                         color: Colors.white,
                                       )
@@ -198,7 +180,13 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                             ],
                           ),
                         )),
-                    const Center(child: Icon(Icons.location_on)),
+                    if (!mapController.called)
+                      const Center(
+                          child: Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                        size: 35,
+                      )),
                   ],
                 ),
               );

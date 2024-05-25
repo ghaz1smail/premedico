@@ -29,7 +29,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
           var list = snapshot.data!.docs
               .map((e) => ChatModel.fromJson(e.data()))
               .toList();
-
+          if (list.isEmpty) {
+            return Center(
+              child: Text('no_data'.tr),
+            );
+          }
           return RefreshIndicator(
             onRefresh: () async {
               setState(() {});

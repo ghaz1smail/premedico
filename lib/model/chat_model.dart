@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:premedico/model/user_model.dart';
 
 class ChatModel {
@@ -6,8 +5,7 @@ class ChatModel {
   bool typing;
   bool clicked;
   String lastMessage;
-  Timestamp updatedAt;
-
+  String updatedAt;
   ChatModel({
     required this.userData,
     required this.typing,
@@ -22,7 +20,7 @@ class ChatModel {
       typing: json['typing'],
       clicked: json['clicked'],
       lastMessage: json['lastMessage'],
-      updatedAt: json['updatedAt'],
+      updatedAt: json['updatedAt'].toString(),
     );
   }
 }

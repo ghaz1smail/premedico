@@ -5,7 +5,7 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:premedico/data/firebase_options.dart';
-import 'package:premedico/controller/material_app.dart';
+import 'package:premedico/data/material_app.dart';
 import 'package:premedico/data/get_initial.dart';
 
 Future<void> _backgroundHandler(RemoteMessage message) async {

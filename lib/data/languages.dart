@@ -102,7 +102,11 @@ class Languages extends Translations {
           'please_enter_your_major': 'يرجى إدخال تخصصك',
           'years_of_experence': 'سنوات الخبرة',
           'enter_years_of_experence': 'أدخل سنوات الخبرة',
-          'please_enter_years_of_experence': 'يرجى إدخال سنوات الخبرة'
+          'please_enter_years_of_experence': 'يرجى إدخال سنوات الخبرة',
+          "update": "تحديث",
+          "date_of_birth": "تاريخ الميلاد",
+          "phone_number": "رقم الهاتف",
+          "enter_phone_number": "أدخل رقم الهاتف"
         },
         'en_US': {
           'login': 'Login',
@@ -223,6 +227,8 @@ class Languages extends Translations {
           'date_of_birth': 'Date of birth',
           'phone_number': 'Phone number',
           'enter_phone_number': 'Enter phone number',
+          'search_address': 'Search address',
+          'sergery_pakage': 'Sergery Pakage',
         },
       };
 }

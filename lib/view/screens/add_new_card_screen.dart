@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:get/get.dart';
+import 'package:premedico/controller/order_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/view/widget/custom_button.dart';
 
@@ -112,6 +113,7 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                 setState(() {
                   loading = true;
                 });
+                Get.find<OrderController>().done = true;
                 await Future.delayed(const Duration(seconds: 2));
                 Get.back();
               },

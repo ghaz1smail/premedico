@@ -14,7 +14,7 @@ class OrderController extends GetxController {
   TextEditingController note = TextEditingController();
   double adminFee = 1;
   String paymentMethod = 'visa';
-  bool orderingLoading = false;
+  bool orderingLoading = false, done = false;
 
   createOrder(UserModel doctorData) async {
     var id = DateTime.now().millisecondsSinceEpoch.toString();
@@ -23,22 +23,25 @@ class OrderController extends GetxController {
     if (paymentMethod == 'visa') {
       await Get.to(() => const AddNewCardScreen());
     }
-
-    await firestore.collection('orders').doc(id).set({
-      'id': id,
-      'dateTime': dateTimePicker.toString(),
-      'timestamp': id,
-      'note': note.text,
-      'paymentMethod': paymentMethod,
-      'doctorData': doctorData.toJson(),
-      'userData': Get.find<AuthController>().userData!.toJson()
-    });
+    if (done) {
+      await firestore.collection('orders').doc(id).set({
+        'id': id,
+        'dateTime': dateTimePicker.toString(),
+        'timestamp': id,
+        'note': note.text,
+        'paymentMethod': paymentMethod,
+        'doctorData': doctorData.toJson(),
+        'userData': Get.find<AuthController>().userData!.toJson()
+      });
+      Get.off(() => MessagesScreen(
+            userData: doctorData,
+          ));
+    }
 
     orderingLoading = false;
+    paymentMethod = 'visa';
+    done = false;
     update();
-    Get.off(() => MessagesScreen(
-          userData: doctorData,
-        ));
   }
 
   changePayment(x) {

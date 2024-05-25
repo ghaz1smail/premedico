@@ -35,8 +35,8 @@ class AuthController extends GetxController {
     loading = true;
 
     name.text = userData!.name!;
-    phone.text = userData!.phone!;
-    date = DateTime.parse(userData!.birth!);
+    phone.text = userData!.phone ?? '';
+    date = DateTime.parse(userData!.birth ?? DateTime.now().toString());
     birth.text = DateFormat.yMMMMd().format(date);
     loading = false;
   }
