@@ -12,6 +12,8 @@ class AuthController extends GetxController {
       email = TextEditingController(),
       username = TextEditingController(),
       password = TextEditingController(),
+      major = TextEditingController(),
+      years = TextEditingController(),
       conPassword = TextEditingController();
   bool notification = false,
       signupLoading = false,
@@ -176,9 +178,15 @@ class AuthController extends GetxController {
       'name': name.text,
       'email': email.text,
       'username': username.text,
+      'favorites': [],
       'image': '',
+      'gender': '',
+      'birth': '',
+      'phone': '',
       'uid': firebaseAuth.currentUser!.uid,
       'type': type,
+      'years': years.text,
+      'major': major.text,
     }).then((value) {
       userData = UserModel(
           name: name.text,
@@ -237,12 +245,12 @@ class AuthController extends GetxController {
 
   navigator() {
     switch (userData!.type) {
-      case 'patient' || 'doctor':
+      case 'patient':
         Get.offAllNamed('patient');
         notificationPermission();
-      // case 'doctor':
-      //   Get.offAllNamed('doctor');
-      //   notificationPermission();
+      case 'doctor':
+        Get.offAllNamed('doctor');
+        notificationPermission();
       default:
         Get.offNamed('landing');
     }
@@ -251,6 +259,20 @@ class AuthController extends GetxController {
     name.clear();
     password.clear();
     conPassword.clear();
+  }
+
+  String? majorValidation(String? value) {
+    if (value!.isEmpty) {
+      return "please_enter_your_major".tr;
+    }
+    return null;
+  }
+
+  String? yearsValidation(String? value) {
+    if (value!.isEmpty) {
+      return "please_enter_years_of_experence".tr;
+    }
+    return null;
   }
 
   String? emailValidation(String? value) {

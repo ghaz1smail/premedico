@@ -90,6 +90,19 @@ class Languages extends Translations {
           'AI_assistant': 'المساعد الذكي',
           'typing': 'يكتب',
           'change_language': 'تغيير اللغة',
+          'consultion_start': 'بداية الاستشارة',
+          'you_can_consult_your_problem_to_the_doctor':
+              'يمكنك استشارة الطبيب حول مشكلتك',
+          'send': 'إرسال',
+          'no_data': 'لا توجد بيانات',
+          'private_conseltation': 'استشارة خاصة',
+          'join_as_a_doctor': 'انضم كطبيب',
+          'major': 'تخصص',
+          'enter_your_major': 'أدخل تخصصك',
+          'please_enter_your_major': 'يرجى إدخال تخصصك',
+          'years_of_experence': 'سنوات الخبرة',
+          'enter_years_of_experence': 'أدخل سنوات الخبرة',
+          'please_enter_years_of_experence': 'يرجى إدخال سنوات الخبرة'
         },
         'en_US': {
           'login': 'Login',
@@ -199,6 +212,13 @@ class Languages extends Translations {
           'send': 'Send',
           'no_data': 'No data',
           'private_conseltation': 'Private conseltation',
+          'join_as_a_doctor': 'Join as a doctor',
+          'major': 'Major',
+          'enter_your_major': 'Enter your major',
+          'please_enter_your_major': 'Please enter your major',
+          'years_of_experence': 'Years of experence',
+          'enter_years_of_experence': 'Enter years of experence',
+          'please_enter_years_of_experence': 'Please nter years of experence',
         },
       };
 }

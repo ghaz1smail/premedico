@@ -30,7 +30,7 @@ class CustomImage extends StatelessWidget {
               imageUrl: url,
               height: width,
               width: width,
-              fit: boxFit ?? BoxFit.contain,
+              fit: boxFit ?? BoxFit.cover,
             ),
     );
   }

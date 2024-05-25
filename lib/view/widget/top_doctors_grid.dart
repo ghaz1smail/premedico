@@ -89,7 +89,6 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
                     url: userData.image ?? '',
                     width: Get.width * 0.5,
                     radius: 10,
-                    boxFit: BoxFit.cover,
                   ),
                   if (userData.favorites != null)
                     Positioned(

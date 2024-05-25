@@ -27,7 +27,9 @@ class CustomDrawer extends StatelessWidget {
                       style: const TextStyle(fontSize: 18),
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   ListTile(
                     onTap: () {
                       customBottomSheet(const LanguageBottomSheet());

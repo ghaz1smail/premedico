@@ -101,9 +101,8 @@ class LoginScreen extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.offNamed(controller.type == 'doctor'
-                                    ? 'd'
-                                    : 'p' "signup");
+                                Get.offNamed(
+                                    "${controller.type == 'doctor' ? 'd' : 'p'}signup");
                               },
                               child: const Text(
                                 'Sign Up',

@@ -37,9 +37,13 @@ class UserModel {
         : null;
     return UserModel(
       type: json['type'],
-      name: json['name'],
-      image: json['image'],
-      email: json['email'],
+      name: json['name'] ?? '',
+      image: json['image'] == null
+          ? 'https://i.sstatic.net/l60Hf.png'
+          : json['image'].toString().isEmpty
+              ? 'https://i.sstatic.net/l60Hf.png'
+              : json['image'],
+      email: json['email'] ?? '',
       uid: json['uid'],
       major: json['major'] ?? '',
       gender: json['gender'] ?? '',
@@ -83,9 +87,9 @@ class HospitalModel {
 
   factory HospitalModel.fromJson(Map json) {
     return HospitalModel(
-      name: json['name'],
-      image: json['image'],
-      id: json['id'],
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
+      id: json['id'] ?? '',
       favorites: json['favorites'] ?? [],
     );
   }

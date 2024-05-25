@@ -57,6 +57,9 @@ class _AiChatScreenState extends State<AiChatScreen> {
             ),
           ),
           messageOptions: MessageOptions(
+            textColor: Colors.white,
+            containerColor: appConstant.secondaryColor,
+            currentUserContainerColor: appConstant.primaryColor,
             showOtherUsersName: false,
             avatarBuilder: (p0, onPressAvatar, onLongPressAvatar) => Padding(
                 padding: const EdgeInsets.all(10),

@@ -108,7 +108,6 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                 width: 75,
                 height: 75,
                 radius: 10,
-                boxFit: BoxFit.cover,
               ),
             ),
             IntrinsicWidth(
