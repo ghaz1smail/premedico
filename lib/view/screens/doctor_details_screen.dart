@@ -307,7 +307,11 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                                   .toList()[index];
 
                               return Opacity(
-                                opacity: dateTime.user!.isEmpty ? 1 : 0.25,
+                                opacity: dateTime.user!.isEmpty &&
+                                        DateTime.parse(dateTime.date!)
+                                            .isAfter(DateTime.now())
+                                    ? 1
+                                    : 0.25,
                                 child: GestureDetector(
                                     onTap: () {
                                       if (dateTime.user!.isEmpty) {

@@ -8,15 +8,17 @@ import 'package:intl/intl.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/message_model.dart';
+import 'package:premedico/model/order_model.dart';
 import 'package:premedico/model/user_model.dart';
 import 'package:premedico/view/screens/video_call_screen.dart';
 import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
+import 'package:premedico/view/widget/rating_bottom_sheet.dart';
 
 class MessagesScreen extends StatefulWidget {
-  const MessagesScreen({super.key, required this.userData, this.dateTime});
+  const MessagesScreen({super.key, required this.userData, this.orderData});
   final UserModel userData;
-  final DateTime? dateTime;
+  final OrderModel? orderData;
 
   @override
   State<MessagesScreen> createState() => _MessagesScreenState();
@@ -28,9 +30,15 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Timer? _debounce;
 
   checkAvailablity() {
-    if (widget.dateTime != null) {
-      if (DateTime.now().difference(widget.dateTime!).inHours >= 0 &&
-          DateTime.now().difference(widget.dateTime!).inHours < 3) {
+    if (widget.orderData != null) {
+      if (DateTime.now()
+                  .difference(DateTime.parse(widget.orderData!.dateTime))
+                  .inHours >=
+              0 &&
+          DateTime.now()
+                  .difference(DateTime.parse(widget.orderData!.dateTime))
+                  .inHours <
+              3) {
         available = true;
       } else {
         available = false;
@@ -279,7 +287,20 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 icon: const Icon(
                   Icons.phone,
                   color: Colors.black,
-                ))
+                )),
+          if (widget.orderData != null)
+            if (DateTime.parse(widget.orderData!.dateTime)
+                .isBefore(DateTime.now()))
+              IconButton(
+                  onPressed: () {
+                    customBottomSheet(RatingBottomSheet(
+                      orderData: widget.orderData!,
+                    ));
+                  },
+                  icon: const Icon(
+                    Icons.star,
+                    color: Colors.black,
+                  ))
         ],
         title: Text(
           widget.userData.name!,

@@ -45,7 +45,10 @@ class _AddNewPackageState extends State<AddNewPackage> {
       loading = true;
     });
     if (imageFile != null) {
-      url = await firebaseStorage.ref().child('packages/$id').getDownloadURL();
+      while (url.isEmpty) {
+        url =
+            await firebaseStorage.ref().child('packages/$id').getDownloadURL();
+      }
     }
     await firestore.collection('packages').doc(id).set({
       'id': id,

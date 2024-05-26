@@ -81,10 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             Iterable<SearchModel> searchAll = snapshot.data!
-                                .where((e) => e.users!.name!
-                                    .toLowerCase()
-                                    .contains(controller.searchController.text
-                                        .toLowerCase()))
+                                .where((e) =>
+                                    e.users!.name!.toLowerCase().contains(
+                                        controller.searchController.text
+                                            .toLowerCase()) ||
+                                    e.hospitals!.name!.toLowerCase().contains(
+                                        controller.searchController.text
+                                            .toLowerCase()))
                                 .toList();
 
                             return searchAll.isEmpty
@@ -100,16 +103,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                           searchAll.toList()[index];
                                       return ListTile(
                                         onTap: () async {
-                                          Get.to(() => DoctorDetailsScreen(
-                                              doctorData: search.users!));
+                                          if (search.types == 'doctor') {
+                                            Get.to(() => DoctorDetailsScreen(
+                                                doctorData: search.users!));
+                                          }
                                         },
                                         leading: CustomImage(
-                                            url: search.users!.image!),
+                                            url: search.types == 'doctor'
+                                                ? search.users!.image!
+                                                : search.hospitals!.image!),
                                         trailing: const Icon(
                                           Icons.arrow_forward,
                                           size: 20,
                                         ),
-                                        title: Text(search.users!.name!),
+                                        title: Text(search.types == 'doctor'
+                                            ? search.users!.name!
+                                            : search.hospitals!.name!),
                                         subtitle: Text(search.types.tr),
                                       );
                                     },

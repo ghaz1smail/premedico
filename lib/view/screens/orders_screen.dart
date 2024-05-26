@@ -39,13 +39,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     color: Colors.black,
                   )))
           : null,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => const DoctorsListScreen());
-        },
-        backgroundColor: appConstant.primaryColor,
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton:
+          Get.find<AuthController>().userData!.type != 'doctor'
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Get.to(() => const DoctorsListScreen());
+                  },
+                  backgroundColor: appConstant.primaryColor,
+                  child: const Icon(Icons.add),
+                )
+              : null,
       body: StreamBuilder(
         stream: widget.user
             ? firestore
@@ -63,7 +66,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
             var list = snapshot.data!.docs
                 .map((e) => OrderModel.fromJson(e.data()))
                 .toList();
-
+            if (list.isEmpty) {
+              return Center(child: Text('no_data'.tr));
+            }
             return RefreshIndicator(
               onRefresh: () async {
                 setState(() {});
@@ -109,7 +114,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             radius: 10,
           ),
           trailing: Text('#${printLastThreeChars(data.id)}'),
-          subtitle: Text(DateFormat('dd/mm/yyyy, hh:mm')
+          subtitle: Text(DateFormat('dd/MM/yyyy, hh:mm')
               .format(DateTime.parse(data.dateTime))),
           title: Text(widget.user
               ? data.doctorData.name.toString()
@@ -117,7 +122,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           onTap: () {
             Get.to(() => MessagesScreen(
                   userData: widget.user ? data.doctorData : data.userData,
-                  dateTime: DateTime.parse(data.dateTime),
+                  orderData: data,
                 ));
           },
         ),

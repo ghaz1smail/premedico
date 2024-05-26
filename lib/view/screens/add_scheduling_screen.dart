@@ -146,27 +146,30 @@ class _AddSchedulingScreenState extends State<AddSchedulingScreen> {
                     onPressed: () {
                       changeTime();
                     },
-                    title: 'pick_time  ${selectedTime.format(context)}'),
+                    title:
+                        '${'pick_time'.tr}  ${selectedTime.format(context)}'),
               ),
               const Spacer(),
-              CustomButton(
-                width: Get.width * 0.5,
-                onPressed: () async {
-                  setState(() {
-                    loading = true;
-                  });
-                  await firestore
-                      .collection('users')
-                      .doc(Get.find<AuthController>().userData!.uid)
-                      .update({
-                    'scheduling': FieldValue.arrayUnion([
-                      {'date': dateTimePicker.toString(), 'user': ''}
-                    ])
-                  });
-                  Get.back();
-                },
-                title: 'submit',
-                loading: loading,
+              Center(
+                child: CustomButton(
+                  width: Get.width * 0.5,
+                  onPressed: () async {
+                    setState(() {
+                      loading = true;
+                    });
+                    await firestore
+                        .collection('users')
+                        .doc(Get.find<AuthController>().userData!.uid)
+                        .update({
+                      'scheduling': FieldValue.arrayUnion([
+                        {'date': dateTimePicker.toString(), 'user': ''}
+                      ])
+                    });
+                    Get.back();
+                  },
+                  title: 'submit',
+                  loading: loading,
+                ),
               ),
               const Spacer(),
             ],

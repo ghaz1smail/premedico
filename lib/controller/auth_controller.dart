@@ -261,6 +261,8 @@ class AuthController extends GetxController {
       'gender': '',
       'birth': '',
       'phone': '',
+      'bio': '',
+      'rate': '0',
       'online': true,
       'uid': firebaseAuth.currentUser!.uid,
       'type': type,

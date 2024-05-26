@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/order_model.dart';
 import 'package:premedico/model/user_model.dart';
 import 'package:premedico/view/screens/add_new_card_screen.dart';
 import 'package:premedico/view/screens/messages_screen.dart';
@@ -44,6 +45,15 @@ class OrderController extends GetxController {
       });
       Get.off(() => MessagesScreen(
             userData: doctorData,
+            orderData: OrderModel.fromJson({
+              'id': id,
+              'dateTime': dateTimePicker.toString(),
+              'timestamp': id,
+              'note': note.text,
+              'paymentMethod': paymentMethod,
+              'doctorData': doctorData.toJson(),
+              'userData': Get.find<AuthController>().userData!.toJson()
+            }),
           ));
     }
 

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:premedico/controller/auth_controller.dart';
+import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/package_model.dart';
+import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 
-class SurgeryDetailsScreen extends StatelessWidget {
+class SurgeryDetailsScreen extends StatefulWidget {
   final PackageModel packageData;
   const SurgeryDetailsScreen({super.key, required this.packageData});
 
+  @override
+  State<SurgeryDetailsScreen> createState() => _SurgeryDetailsScreenState();
+}
+
+class _SurgeryDetailsScreenState extends State<SurgeryDetailsScreen> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +33,7 @@ class SurgeryDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              packageData.name!,
+              widget.packageData.name!,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Padding(
@@ -32,7 +41,7 @@ class SurgeryDetailsScreen extends StatelessWidget {
               child: Row(
                 children: [
                   CustomImage(
-                    url: packageData.image!,
+                    url: widget.packageData.image!,
                     radius: 20,
                     height: 125,
                     width: 125,
@@ -45,15 +54,15 @@ class SurgeryDetailsScreen extends StatelessWidget {
                       runSpacing: 10,
                       children: [
                         Text(
-                          '${'pre'.tr}: ${packageData.pre!}',
+                          '${'pre'.tr}: ${widget.packageData.pre!}',
                           style: const TextStyle(fontSize: 16),
                         ),
                         Text(
-                          '${'into'.tr}: ${packageData.into!}',
+                          '${'into'.tr}: ${widget.packageData.into!}',
                           style: const TextStyle(fontSize: 16),
                         ),
                         Text(
-                          '${'post'.tr}: ${packageData.post!}',
+                          '${'post'.tr}: ${widget.packageData.post!}',
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
@@ -70,7 +79,7 @@ class SurgeryDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${'supervised_by'.tr} ${packageData.doctorData!.name}',
+                      '${'supervised_by'.tr} ${widget.packageData.doctorData!.name}',
                       style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(
@@ -80,11 +89,11 @@ class SurgeryDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          packageData.doctorData!.hospital!.name!,
+                          widget.packageData.doctorData!.hospital!.name!,
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
-                          '${'jod'.tr} ${packageData.price}',
+                          '${'jod'.tr} ${widget.packageData.price}',
                           style: const TextStyle(
                               fontSize: 18,
                               color: Colors.red,
@@ -95,7 +104,24 @@ class SurgeryDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            const Spacer(),
+            CustomButton(
+                width: Get.width * 0.5,
+                onPressed: () async {
+                  setState(() {
+                    loading = true;
+                  });
+                  await firestore.collection('book_packages').add({
+                    'package': widget.packageData.toJson(),
+                    'userData': Get.find<AuthController>().userData!.toJson(),
+                    'timestamp': DateTime.now().toIso8601String()
+                  });
+                  Get.back();
+                },
+                loading: loading,
+                title: 'book'),
+            const Spacer(),
           ],
         ),
       ),

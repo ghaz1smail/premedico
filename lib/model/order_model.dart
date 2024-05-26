@@ -8,21 +8,23 @@ class OrderModel {
   String paymentMethod;
   String timestamp;
   String dateTime;
+  String? rate;
 
-  OrderModel({
-    required this.note,
-    required this.id,
-    required this.doctorData,
-    required this.userData,
-    required this.paymentMethod,
-    required this.timestamp,
-    required this.dateTime,
-  });
+  OrderModel(
+      {required this.note,
+      required this.id,
+      required this.doctorData,
+      required this.userData,
+      required this.paymentMethod,
+      required this.timestamp,
+      required this.dateTime,
+      this.rate});
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       note: json['note'] ?? '',
       id: json['id'] ?? '',
+      rate: json['rate'] ?? '',
       doctorData: UserModel.fromJson(json['doctorData']),
       userData: UserModel.fromJson(json['userData']),
       paymentMethod: json['paymentMethod'] ?? '',

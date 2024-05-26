@@ -18,8 +18,12 @@ class SearchModel {
     return SearchModel(
       types: type,
       time: json['time'] ?? '',
-      users: type == 'doctor' ? UserModel.fromJson(json) : null,
-      hospitals: type == 'hospital' ? HospitalModel.fromJson(json) : null,
+      users: type == 'doctor'
+          ? UserModel.fromJson(json)
+          : UserModel(name: '', image: ''),
+      hospitals: type == 'hospital'
+          ? HospitalModel.fromJson(json)
+          : HospitalModel(name: '', image: ''),
     );
   }
 }

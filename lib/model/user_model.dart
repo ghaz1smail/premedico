@@ -83,10 +83,15 @@ class UserModel {
       'image': image,
       'email': email,
       'uid': uid,
-      'phone': phone,
-      'birth': birth,
-      'gender': gender,
-      if (hospital != null) 'hospital': hospital!.toJson()
+      'major': major,
+      'rate': rate ?? '',
+      'favorites': favorites ?? [],
+      'bio': bio ?? '',
+      'price': price,
+      'phone': phone ?? '',
+      'birth': birth ?? '',
+      'gender': gender ?? '',
+      if (type == 'doctor') 'hospital': hospital!.toJson()
     };
   }
 }

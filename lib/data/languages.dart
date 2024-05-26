@@ -117,6 +117,17 @@ class Languages extends Translations {
           'add_new': 'إضافة جديد',
           'pick_date': 'اختر التاريخ',
           'pick_time': 'اختر الوقت',
+          'enter_package_name': 'أدخل اسم الباقة',
+          'package_name': 'اسم الباقة',
+          'enter_package_price': 'أدخل سعر الباقة',
+          'package_price': 'سعر الباقة',
+          'package_pre': 'الباقة السابقة',
+          'package_post': 'الباقة اللاحقة',
+          'package_into': 'الباقة الداخلية',
+          'supervised_by': 'بإشراف',
+          'pick_hospital': 'اختر المستشفى',
+          'review_the_consultation': 'راجع الاستشارة',
+          'review': 'مراجعة',
         },
         'en_US': {
           'login': 'Login',
@@ -257,6 +268,8 @@ class Languages extends Translations {
           'package_into': 'Package into',
           'supervised_by': 'Supervised by',
           'pick_hospital': 'Pick hospital',
+          'review_the_consultation': 'Review the consultation',
+          'review': 'Review',
         },
       };
 }
