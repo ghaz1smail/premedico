@@ -3,12 +3,14 @@ class HospitalModel {
   String? name;
   String? image;
   List? favorites;
+  List? users;
 
   HospitalModel({
     this.id,
     this.name,
     this.image,
     this.favorites,
+    this.users,
   });
 
   factory HospitalModel.fromJson(Map json) {
@@ -17,10 +19,17 @@ class HospitalModel {
       image: json['image'] ?? '',
       id: json['id'] ?? '',
       favorites: json['favorites'] ?? [],
+      users: json['users'] ?? [],
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'name': name, 'image': image, 'id': id, 'favorites': favorites};
+    return {
+      'name': name,
+      'image': image,
+      'id': id,
+      'favorites': favorites,
+      'users': users
+    };
   }
 }

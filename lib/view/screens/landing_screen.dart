@@ -18,9 +18,22 @@ class _LandingScreenState extends State<LandingScreen> {
       body: Column(
         children: [
           const Spacer(),
-          Image.asset(
-            'assets/images/logo.png',
-            height: 200,
+          GestureDetector(
+            onTap: () {
+              // String id = DateTime.now().millisecondsSinceEpoch.toString();
+              // firestore.collection('hospitals').doc(id).set({
+              //   'id': id,
+              //   'name': 'Abdali Hospital',
+              //   'favorites': [],
+              //   'users': [],
+              //   'image':
+              //       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Abdali_Hospital_Exterior_Image.jpg/1200px-Abdali_Hospital_Exterior_Image.jpg'
+              // });
+            },
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 200,
+            ),
           ),
           const Spacer(),
           Container(

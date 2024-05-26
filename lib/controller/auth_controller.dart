@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:premedico/controller/dashboard_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/hospital_model.dart';
 import 'package:premedico/model/user_model.dart';
 
 class AuthController extends GetxController {
@@ -31,6 +32,7 @@ class AuthController extends GetxController {
   DateTime date = DateTime.now();
   String type = 'patient';
   UserModel? userData;
+  HospitalModel? hospitalData;
   File? imageFile;
 
   getProfileData() {
@@ -264,6 +266,7 @@ class AuthController extends GetxController {
       'type': type,
       'years': years.text,
       'major': major.text,
+      if (type == 'doctor') 'hospital': hospitalData!.toJson()
     }).then((value) {
       userData = UserModel(
           name: name.text,
@@ -314,6 +317,8 @@ class AuthController extends GetxController {
       email.text = emailx;
       rememberMe = true;
     }
+    name.clear();
+    phone.clear();
     Get.offNamed('landing');
     firebaseAuth.signOut();
     firebaseMessaging.deleteToken();

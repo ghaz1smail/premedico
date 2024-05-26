@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/hospital_model.dart';
 import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_text_field.dart';
 
@@ -51,6 +52,46 @@ class _DSignUpScreenState extends State<DSignUpScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
+                    child: StreamBuilder(
+                      stream: firestore.collection('hospitals').snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var list = snapshot.data!.docs
+                              .map((e) => HospitalModel.fromJson(e.data()));
+                          return DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                              ),
+                              hintStyle: const TextStyle(color: Colors.black),
+                              hintText: "pick_hospital".tr,
+                            ),
+                            value: controller.hospitalData!.id,
+                            onChanged: (value) {
+                              setState(() {
+                                controller.hospitalData!.id = value;
+                              });
+                            },
+                            items: list
+                                .map((value) => DropdownMenuItem(
+                                    onTap: () {
+                                      setState(() {
+                                        controller.hospitalData = value;
+                                      });
+                                    },
+                                    value: value.id,
+                                    child: Text(value.name!)))
+                                .toList(),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
                     child: CustomTextField(
                       hint: 'enter_years_of_experence',
                       label: 'years_of_experence',
@@ -80,7 +121,9 @@ class _DSignUpScreenState extends State<DSignUpScreen> {
                   const SizedBox(height: 40),
                   CustomButton(
                     onPressed: () {
-                      controller.signingUp();
+                      if (controller.hospitalData != null) {
+                        controller.signingUp();
+                      }
                     },
                     title: "sign_up".tr,
                     loading: controller.signupLoading,

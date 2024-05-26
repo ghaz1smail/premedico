@@ -256,6 +256,7 @@ class Languages extends Translations {
           'package_post': 'Package post',
           'package_into': 'Package into',
           'supervised_by': 'Supervised by',
+          'pick_hospital': 'Pick hospital',
         },
       };
 }
