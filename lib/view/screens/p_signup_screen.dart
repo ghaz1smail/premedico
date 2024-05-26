@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+
 import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_text_field.dart';
 
@@ -99,7 +100,7 @@ class PSignUpScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

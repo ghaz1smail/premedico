@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ final getStorage = GetStorage();
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
 Color colorCompute(color) {
   return Color(int.parse('0xff$color')).computeLuminance() > 0.5

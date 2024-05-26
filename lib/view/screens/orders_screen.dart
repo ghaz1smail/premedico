@@ -10,8 +10,9 @@ import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
 class OrdersScreen extends StatefulWidget {
-  final bool showBar;
-  const OrdersScreen({super.key, this.showBar = true});
+  final bool showBar, user;
+
+  const OrdersScreen({super.key, this.showBar = true, this.user = true});
 
   @override
   State<OrdersScreen> createState() => _OrdersScreenState();
@@ -46,11 +47,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
         child: const Icon(Icons.add),
       ),
       body: StreamBuilder(
-        stream: firestore
-            .collection('orders')
-            .where('userData.uid',
-                isEqualTo: Get.find<AuthController>().userData!.uid)
-            .snapshots(),
+        stream: widget.user
+            ? firestore
+                .collection('orders')
+                .where('userData.uid',
+                    isEqualTo: Get.find<AuthController>().userData!.uid)
+                .snapshots()
+            : firestore
+                .collection('orders')
+                .where('doctorData.uid',
+                    isEqualTo: Get.find<AuthController>().userData!.uid)
+                .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var list = snapshot.data!.docs
@@ -96,15 +103,22 @@ class _OrdersScreenState extends State<OrdersScreen> {
         padding: const EdgeInsets.all(10),
         child: ListTile(
           leading: CustomImage(
-            url: data.doctorData.image ?? '',
+            url: widget.user
+                ? data.doctorData.image.toString()
+                : data.userData.image.toString(),
             radius: 10,
           ),
           trailing: Text('#${printLastThreeChars(data.id)}'),
           subtitle: Text(DateFormat('dd/mm/yyyy, hh:mm')
               .format(DateTime.parse(data.dateTime))),
-          title: Text(data.doctorData.name ?? ''),
+          title: Text(widget.user
+              ? data.doctorData.name.toString()
+              : data.userData.name.toString()),
           onTap: () {
-            Get.to(() => MessagesScreen(userData: data.doctorData));
+            Get.to(() => MessagesScreen(
+                  userData: widget.user ? data.doctorData : data.userData,
+                  dateTime: DateTime.parse(data.dateTime),
+                ));
           },
         ),
       ),

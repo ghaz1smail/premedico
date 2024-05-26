@@ -19,8 +19,13 @@ class CustomDrawer extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    leading: CustomImage(
-                      url: controller.userData!.image!,
+                    leading: GestureDetector(
+                      onTap: () async {
+                        Get.toNamed('editProfile');
+                      },
+                      child: CustomImage(
+                        url: controller.userData!.image!,
+                      ),
                     ),
                     title: Text(
                       controller.userData!.name!,

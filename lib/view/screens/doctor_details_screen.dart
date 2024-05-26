@@ -37,9 +37,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                   width: Get.width * 0.75,
                   height: 55,
                   onPressed: () {
-                    Get.to(() => BookAppointmentScreen(
-                          doctorData: widget.doctorData,
-                        ));
+                    if (Get.find<OrderController>().scheduling != null) {
+                      Get.to(() => BookAppointmentScreen(
+                            doctorData: widget.doctorData,
+                          ));
+                    } else {
+                      Get.snackbar(
+                        'soory'.tr,
+                        'Please select a time slot',
+                      );
+                    }
                   },
                   title: 'book_private_consultation'),
             ),
@@ -270,47 +277,89 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                   Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(top: 10, bottom: 25),
-                    child: Wrap(
-                        spacing: 15,
-                        runSpacing: 15,
-                        children: List.generate(controller.randomTime.length,
-                            (index) {
-                          final dateTime = controller.randomTime[index];
-                          return GestureDetector(
-                              onTap: () {
-                                controller.changeTime(dateTime);
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                width: Get.width * 0.25,
-                                alignment: Alignment.center,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                decoration: BoxDecoration(
-                                    color: controller.dateTimePicker.hour ==
-                                                dateTime.hour &&
-                                            controller.dateTimePicker.minute ==
-                                                dateTime.minute
-                                        ? appConstant.primaryColor
-                                        : null,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(15)),
-                                    border: Border.all(
-                                        color: appConstant.primaryColor)),
-                                child: Text(
-                                  DateFormat('h:mm a').format(dateTime),
-                                  style: TextStyle(
-                                      color: controller.dateTimePicker.hour ==
-                                                  dateTime.hour &&
-                                              controller
-                                                      .dateTimePicker.minute ==
-                                                  dateTime.minute
-                                          ? Colors.white
-                                          : null,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ));
-                        })),
+                    child: widget.doctorData.scheduling!
+                            .where((e) =>
+                                DateTime.parse(e.date!).day ==
+                                    controller.dateTimePicker.day &&
+                                DateTime.parse(e.date!).month ==
+                                    controller.dateTimePicker.month)
+                            .isEmpty
+                        ? Center(
+                            child: Text('no_data'.tr),
+                          )
+                        : Wrap(
+                            spacing: 15,
+                            runSpacing: 15,
+                            children: List.generate(
+                                widget.doctorData.scheduling!
+                                    .where((e) =>
+                                        DateTime.parse(e.date!).day ==
+                                            controller.dateTimePicker.day &&
+                                        DateTime.parse(e.date!).month ==
+                                            controller.dateTimePicker.month)
+                                    .length, (index) {
+                              final dateTime = widget.doctorData.scheduling!
+                                  .where((e) =>
+                                      DateTime.parse(e.date!).day ==
+                                          controller.dateTimePicker.day &&
+                                      DateTime.parse(e.date!).month ==
+                                          controller.dateTimePicker.month)
+                                  .toList()[index];
+
+                              return Opacity(
+                                opacity: dateTime.user!.isEmpty ? 1 : 0.25,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      if (dateTime.user!.isEmpty) {
+                                        controller.changeTime(
+                                            DateTime.parse(dateTime.date!));
+                                        controller.scheduling = dateTime;
+                                      }
+                                    },
+                                    child: AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      width: Get.width * 0.25,
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      decoration: BoxDecoration(
+                                          color: controller.dateTimePicker.hour ==
+                                                      DateTime.parse(
+                                                              dateTime.date!)
+                                                          .hour &&
+                                                  controller.dateTimePicker
+                                                          .minute ==
+                                                      DateTime.parse(
+                                                              dateTime.date!)
+                                                          .minute
+                                              ? appConstant.primaryColor
+                                              : null,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(15)),
+                                          border: Border.all(
+                                              color: appConstant.primaryColor)),
+                                      child: Text(
+                                        DateFormat('h:mm a').format(
+                                            DateTime.parse(dateTime.date!)),
+                                        style: TextStyle(
+                                            color: controller.dateTimePicker
+                                                            .hour ==
+                                                        DateTime.parse(
+                                                                dateTime.date!)
+                                                            .hour &&
+                                                    controller.dateTimePicker
+                                                            .minute ==
+                                                        DateTime.parse(
+                                                                dateTime.date!)
+                                                            .minute
+                                                ? Colors.white
+                                                : null,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )),
+                              );
+                            })),
                   ),
                 ],
               ),

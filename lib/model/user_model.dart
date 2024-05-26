@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:premedico/model/hospital_model.dart';
 
 class UserModel {
@@ -16,6 +17,7 @@ class UserModel {
   String? bio;
   HospitalModel? hospital;
   bool online;
+  List<SchedulingModel>? scheduling;
 
   UserModel({
     this.type,
@@ -32,22 +34,30 @@ class UserModel {
     this.phone,
     this.birth,
     this.gender,
+    this.scheduling,
     this.online = false,
   });
 
   factory UserModel.fromJson(Map json) {
+    List s = json['scheduling'] ?? [];
     var hospitalx = json['hospital'] != null
         ? HospitalModel.fromJson(json['hospital'])
         : null;
+    var schedulingx = s.map((e) => SchedulingModel.fromJson(e)).toList();
     return UserModel(
       type: json['type'],
-      name: json['name'] ?? '',
+      name: (json['type'] == 'doctor' ? '${'dr'.tr} ' : '') +
+          json['name']
+              .toString()
+              .replaceFirst('Dr', '')
+              .replaceFirst('دكتور', ''),
       image: json['image'] == null
           ? 'https://i.sstatic.net/l60Hf.png'
           : json['image'].toString().isEmpty
               ? 'https://i.sstatic.net/l60Hf.png'
               : json['image'],
       email: json['email'] ?? '',
+      scheduling: schedulingx,
       uid: json['uid'],
       online: json['online'] ?? false,
       major: json['major'] ?? '',
@@ -77,6 +87,30 @@ class UserModel {
       'birth': birth,
       'gender': gender,
       if (hospital != null) 'hospital': hospital!.toJson()
+    };
+  }
+}
+
+class SchedulingModel {
+  String? date;
+  String? user;
+
+  SchedulingModel({
+    this.date,
+    this.user,
+  });
+
+  factory SchedulingModel.fromJson(Map json) {
+    return SchedulingModel(
+      date: json['date'] ?? '',
+      user: json['user'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date,
+      'user': user,
     };
   }
 }

@@ -118,6 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onPressed: () {
                       controller.updateProfile();
                     },
+                    loading: controller.loading,
                     title: 'update',
                     width: Get.width * 0.5,
                   ),

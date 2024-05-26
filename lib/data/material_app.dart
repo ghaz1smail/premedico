@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:premedico/controller/language_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/data/languages.dart';
+import 'package:premedico/view/screens/add_new_package.dart';
+import 'package:premedico/view/screens/add_scheduling_screen.dart';
 import 'package:premedico/view/screens/ai_chat_screen.dart';
 import 'package:premedico/view/screens/call_ambulance_screen.dart';
 import 'package:premedico/view/screens/d_signup_screen.dart';
@@ -17,6 +19,7 @@ import 'package:premedico/view/screens/patient_dashboard_screen.dart';
 import 'package:premedico/view/screens/p_signup_screen.dart';
 import 'package:premedico/view/screens/landing_screen.dart';
 import 'package:premedico/view/screens/on_boarding_screen.dart';
+import 'package:premedico/view/screens/scheduling_screen.dart';
 import 'package:premedico/view/screens/settings_screen.dart';
 import 'package:premedico/view/screens/splash_screen.dart';
 import 'package:premedico/view/screens/surgery_package_screen.dart';
@@ -56,6 +59,9 @@ class MyApp extends StatelessWidget {
         "ai": (context) => const AiChatScreen(),
         "ordersScreen": (context) => const OrdersScreen(),
         "editProfile": (context) => const EditProfileScreen(),
+        "scheduling": (context) => const SchedulingScreen(),
+        "newScheduling": (context) => const AddSchedulingScreen(),
+        "newPackage": (context) => const AddNewPackage(),
       },
       home: const SplashScreen(),
     );

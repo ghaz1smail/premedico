@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
@@ -15,6 +16,7 @@ class OrderController extends GetxController {
   double adminFee = 1;
   String paymentMethod = 'visa';
   bool orderingLoading = false, done = false;
+  SchedulingModel? scheduling;
 
   createOrder(UserModel doctorData) async {
     var id = DateTime.now().millisecondsSinceEpoch.toString();
@@ -23,7 +25,7 @@ class OrderController extends GetxController {
     if (paymentMethod == 'visa') {
       await Get.to(() => const AddNewCardScreen());
     }
-    if (done) {
+    if (done || paymentMethod == 'cash') {
       await firestore.collection('orders').doc(id).set({
         'id': id,
         'dateTime': dateTimePicker.toString(),
@@ -32,6 +34,13 @@ class OrderController extends GetxController {
         'paymentMethod': paymentMethod,
         'doctorData': doctorData.toJson(),
         'userData': Get.find<AuthController>().userData!.toJson()
+      });
+      await firestore.collection('users').doc(doctorData.uid).update({
+        'scheduling': FieldValue.arrayRemove([scheduling!.toJson()])
+      });
+      scheduling!.user = Get.find<AuthController>().userData!.uid;
+      await firestore.collection('users').doc(doctorData.uid).update({
+        'scheduling': FieldValue.arrayUnion([scheduling!.toJson()])
       });
       Get.off(() => MessagesScreen(
             userData: doctorData,

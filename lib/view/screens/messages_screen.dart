@@ -14,8 +14,9 @@ import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
 class MessagesScreen extends StatefulWidget {
-  const MessagesScreen({super.key, required this.userData});
+  const MessagesScreen({super.key, required this.userData, this.dateTime});
   final UserModel userData;
+  final DateTime? dateTime;
 
   @override
   State<MessagesScreen> createState() => _MessagesScreenState();
@@ -23,8 +24,19 @@ class MessagesScreen extends StatefulWidget {
 
 class _MessagesScreenState extends State<MessagesScreen> {
   List<ChatMessage> messages = [];
-  bool typing = false;
+  bool typing = false, available = true;
   Timer? _debounce;
+
+  checkAvailablity() {
+    if (widget.dateTime != null) {
+      if (DateTime.now().difference(widget.dateTime!).inHours >= 0 &&
+          DateTime.now().difference(widget.dateTime!).inHours < 3) {
+        available = true;
+      } else {
+        available = false;
+      }
+    }
+  }
 
   pickImage() async {
     // String path = '';
@@ -218,11 +230,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
         BoxShadow(blurRadius: 5, spreadRadius: 0.1, color: Colors.black12)
       ],
       messageText: Text(
-        'you_can_consult_your_problem_to_the_doctor'.tr,
+        available
+            ? 'you_can_consult_your_problem_to_the_doctor'.tr
+            : 'you_are_out_of_consultation_time'.tr,
         textAlign: TextAlign.center,
       ),
       titleText: Text(
-        'consultion_start'.tr,
+        available ? 'consultion_start'.tr : 'sorry'.tr,
         textAlign: TextAlign.center,
         style: TextStyle(
             color: appConstant.primaryColor,
@@ -236,6 +250,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
   @override
   void initState() {
     showMessage();
+    checkAvailablity();
     super.initState();
   }
 
@@ -254,16 +269,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
               color: Colors.black,
             )),
         actions: [
-          IconButton(
-              onPressed: () {
-                Get.to(() => VideoCallScreen(
-                      userData: widget.userData,
-                    ));
-              },
-              icon: const Icon(
-                Icons.phone,
-                color: Colors.black,
-              ))
+          if (available)
+            IconButton(
+                onPressed: () {
+                  Get.to(() => VideoCallScreen(
+                        userData: widget.userData,
+                      ));
+                },
+                icon: const Icon(
+                  Icons.phone,
+                  color: Colors.black,
+                ))
         ],
         title: Text(
           widget.userData.name!,
@@ -307,6 +323,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     }
 
                     return DashChat(
+                      readOnly: !available,
                       typingUsers: [
                         if (typing)
                           ChatUser(

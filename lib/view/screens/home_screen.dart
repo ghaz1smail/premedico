@@ -1,17 +1,20 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/dashboard_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/package_model.dart';
 import 'package:premedico/model/search_model.dart';
 import 'package:premedico/view/screens/doctor_details_screen.dart';
+import 'package:premedico/view/screens/surgery_details_screen.dart';
+import 'package:premedico/view/screens/surgery_package_screen.dart';
+import 'package:premedico/view/widget/custom_banner.dart';
+import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/screens/doctors_list_screen.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 import 'package:premedico/view/widget/top_doctors_grid.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:rxdart/rxdart.dart' as rxdart;
 
 class HomeScreen extends StatefulWidget {
@@ -119,60 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : ListView(
                         padding: EdgeInsets.zero,
                         children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                            width: Get.width,
-                            height: Get.height * .17,
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                  width: Get.width,
-                                  child: CarouselSlider.builder(
-                                    itemCount: controller.banner.length,
-                                    itemBuilder: (BuildContext context,
-                                            int itemIndex, int pageViewIndex) =>
-                                        Container(
-                                            alignment: Alignment.center,
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15)),
-                                            ),
-                                            child: CustomImage(
-                                              radius: 0,
-                                              url: controller.banner[itemIndex],
-                                              width: Get.width,
-                                              boxFit: BoxFit.fill,
-                                            )),
-                                    options: CarouselOptions(
-                                      autoPlay: true,
-                                      viewportFraction: 1,
-                                      enlargeCenterPage: true,
-                                      onPageChanged: (index, reason) {
-                                        controller.changeBannerIndex(index);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 10,
-                                  child: SizedBox(
-                                    width: Get.width,
-                                    child: Align(
-                                      child: AnimatedSmoothIndicator(
-                                        activeIndex: controller.bannerIndex,
-                                        count: controller.banner.length,
-                                        effect: ScrollingDotsEffect(
-                                            dotWidth: 6,
-                                            dotHeight: 6,
-                                            activeDotColor:
-                                                appConstant.primaryColor),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          const CustomBanner(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -243,7 +193,91 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(
                               height: 425,
                               width: Get.width,
-                              child: const TopDoctorsGrid())
+                              child: const TopDoctorsGrid()),
+                          StreamBuilder(
+                            stream:
+                                firestore.collection('packages').snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                var list = snapshot.data!.docs.map(
+                                    (e) => PackageModel.fromJson(e.data()));
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'sergery_package'.tr,
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          if (list.isNotEmpty)
+                                            TextButton(
+                                                onPressed: () {
+                                                  Get.to(() =>
+                                                      const SurgeryPackageScreen());
+                                                },
+                                                child: Text(
+                                                  'see_all'.tr,
+                                                  style: TextStyle(
+                                                      color: appConstant
+                                                          .secondaryColor),
+                                                ))
+                                        ],
+                                      ),
+                                    ),
+                                    list.isEmpty
+                                        ? CustomButton(
+                                            width: Get.width * 0.5,
+                                            onPressed: () {
+                                              Get.toNamed('newPackage');
+                                            },
+                                            title: 'add_new')
+                                        : Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 25),
+                                            height: 125,
+                                            width: Get.width,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: list.length,
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                var data = list.toList()[index];
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    Get.to(() =>
+                                                        SurgeryDetailsScreen(
+                                                            packageData: data));
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      CustomImage(
+                                                        url: data.image!,
+                                                        radius: 10,
+                                                        height: 100,
+                                                        width: 100,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(data.name!)
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ))
+                                  ],
+                                );
+                              }
+                              return Container();
+                            },
+                          ),
                         ],
                       ),
               ),

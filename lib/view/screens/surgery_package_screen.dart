@@ -1,109 +1,137 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
+import 'package:premedico/model/package_model.dart';
 import 'package:premedico/view/widget/custom_image.dart';
+import 'package:premedico/view/widget/custom_loading.dart';
 
 class SurgeryPackageScreen extends StatelessWidget {
-  const SurgeryPackageScreen({super.key});
+  final bool user;
+  const SurgeryPackageScreen({super.key, this.user = true});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: appConstant.primaryColor,
         appBar: AppBar(
-          title: Text('sergery_pakage'.tr),
+          title: Text('sergery_package'.tr),
           backgroundColor: appConstant.primaryColor,
         ),
         body: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-              color: appConstant.backgroundColor,
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(20))),
-          child: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Tonsillectomy ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      children: [
-                        CustomImage(
-                          url:
-                              'https://healthinfo.healthengine.com.au/assets/iStock-496401605.jpg',
-                          radius: 20,
-                          height: 125,
-                          width: 125,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Wrap(
-                            runSpacing: 10,
-                            children: [
-                              Text(
-                                'Pre : Dr follow up , with lab tests',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                'Into: The whole surgery Anastasia',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                'Post :Dr follow up on medicine',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Card(
-                    color: Colors.grey.shade200,
-                    child: const Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: appConstant.backgroundColor,
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(20))),
+            child: StreamBuilder(
+              stream: user
+                  ? firestore.collection('packages').snapshots()
+                  : firestore
+                      .collection('packages')
+                      .where('doctorData.uid',
+                          isEqualTo: Get.find<AuthController>().userData!.uid)
+                      .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var list = snapshot.data!.docs
+                      .map((e) => PackageModel.fromJson(e.data()))
+                      .toList();
+                  if (list.isEmpty) {
+                    return Center(
+                      child: Text('no_data'.tr),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      var data = list[index];
+                      return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Supervised by Dr.Amjad',
-                            style: TextStyle(fontSize: 18),
+                            data.name!,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           ),
-                          SizedBox(
-                            height: 10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Row(
+                              children: [
+                                CustomImage(
+                                  url: data.image!,
+                                  radius: 20,
+                                  height: 125,
+                                  width: 125,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Wrap(
+                                    runSpacing: 10,
+                                    children: [
+                                      Text(
+                                        '${'pre'.tr}: ${data.pre!}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        '${'into'.tr}: ${data.into!}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        '${'post'.tr}: ${data.post!}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Luzmila Hospital',
-                                style: TextStyle(fontSize: 18),
+                          Card(
+                            color: Colors.grey.shade200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${'supervised_by'.tr} ${data.doctorData!.name}',
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.doctorData!.hospital!.name!,
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        '${'jod'.tr} ${data.price}',
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              Text(
-                                'JOD 2000',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                            ),
                           )
                         ],
-                      ),
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-        ));
+                      );
+                    },
+                  );
+                }
+
+                return const CustomLoading();
+              },
+            )));
   }
 }

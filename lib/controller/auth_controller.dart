@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:premedico/controller/dashboard_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/user_model.dart';
 
@@ -57,7 +59,32 @@ class AuthController extends GetxController {
     }
   }
 
-  updateProfile() {}
+  updateProfile() async {
+    loading = true;
+    var url = '';
+    update();
+    if (imageFile != null) {
+      while (url.isEmpty) {
+        url = await firebaseStorage
+            .ref()
+            .child('users/${userData!.uid}')
+            .getDownloadURL();
+      }
+    }
+    userData!.name = name.text;
+    userData!.phone = phone.text;
+    userData!.image = url;
+
+    await firestore.collection('users').doc(userData!.uid).update({
+      'name': name.text,
+      'phone': phone.text,
+      'image': url,
+      'birth': date.toIso8601String()
+    });
+
+    loading = false;
+    Get.back();
+  }
 
   pickImage() async {
     final picker = ImagePicker();
@@ -65,6 +92,9 @@ class AuthController extends GetxController {
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
       update();
+      await firebaseStorage.ref().child('users/${userData!.uid}').putData(
+          File(pickedFile.path).readAsBytesSync(),
+          SettableMetadata(contentType: 'image/png'));
     }
   }
 
@@ -288,6 +318,7 @@ class AuthController extends GetxController {
     firebaseAuth.signOut();
     firebaseMessaging.deleteToken();
     userData = null;
+    Get.find<DashboardController>().selectedIndex = 0;
   }
 
   navigator() {
@@ -332,7 +363,7 @@ class AuthController extends GetxController {
   }
 
   String? validatePass(String? value) {
-    if (value!.length < 8 || value.isEmpty) {
+    if (value!.length < 6 || value.isEmpty) {
       return 'password_must_not_be_at_least_8_charaters'.tr;
     }
     return null;
