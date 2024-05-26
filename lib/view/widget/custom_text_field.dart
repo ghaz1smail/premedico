@@ -64,7 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         labelText: widget.label!.tr,
         labelStyle: const TextStyle(
           fontWeight: FontWeight.w500,
-          color: Color.fromARGB(255, 0, 0, 0),
+          color: Colors.black,
         ),
         suffixIcon: widget.obscure
             ? IconButton(

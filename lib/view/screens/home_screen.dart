@@ -10,7 +10,6 @@ import 'package:premedico/view/screens/doctor_details_screen.dart';
 import 'package:premedico/view/screens/surgery_details_screen.dart';
 import 'package:premedico/view/screens/surgery_package_screen.dart';
 import 'package:premedico/view/widget/custom_banner.dart';
-import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/screens/doctors_list_screen.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
@@ -231,47 +230,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                     ),
-                                    list.isEmpty
-                                        ? CustomButton(
-                                            width: Get.width * 0.5,
-                                            onPressed: () {
-                                              Get.toNamed('newPackage');
-                                            },
-                                            title: 'add_new')
-                                        : Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 25),
-                                            height: 125,
-                                            width: Get.width,
-                                            child: ListView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: list.length,
-                                              scrollDirection: Axis.horizontal,
-                                              itemBuilder: (context, index) {
-                                                var data = list.toList()[index];
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    Get.to(() =>
-                                                        SurgeryDetailsScreen(
-                                                            packageData: data));
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      CustomImage(
-                                                        url: data.image!,
-                                                        radius: 10,
-                                                        height: 100,
-                                                        width: 100,
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(data.name!)
-                                                    ],
-                                                  ),
-                                                );
+                                    Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 25),
+                                        height: 125,
+                                        width: Get.width,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: list.length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            var data = list.toList()[index];
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    SurgeryDetailsScreen(
+                                                        packageData: data));
                                               },
-                                            ))
+                                              child: Column(
+                                                children: [
+                                                  CustomImage(
+                                                    url: data.image!,
+                                                    radius: 10,
+                                                    height: 100,
+                                                    width: 100,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(data.name!)
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ))
                                   ],
                                 );
                               }

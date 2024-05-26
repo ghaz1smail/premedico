@@ -97,7 +97,7 @@ class DoctorDashboardScreen extends StatelessWidget {
                   stream: firestore
                       .collection('packages')
                       .where('doctorData.uid',
-                          isEqualTo: Get.find<AuthController>().userData!.uid)
+                          isEqualTo: Get.find<AuthController>().userData?.uid)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {

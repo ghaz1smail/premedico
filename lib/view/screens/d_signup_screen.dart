@@ -58,32 +58,43 @@ class _DSignUpScreenState extends State<DSignUpScreen> {
                         if (snapshot.hasData) {
                           var list = snapshot.data!.docs
                               .map((e) => HospitalModel.fromJson(e.data()));
-                          return DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
+                          return Container(
+                            height: 55,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
+                                border: Border.all(
+                                    color: appConstant.primaryColor)),
+                            child: DropdownButton(
+                              underline: const SizedBox(),
+                              isExpanded: true,
+                              hint: Text(
+                                "pick_hospital".tr,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500),
                               ),
-                              hintStyle: const TextStyle(color: Colors.black),
-                              hintText: "pick_hospital".tr,
+                              padding: EdgeInsets.zero,
+                              value: controller.hospitalData?.id,
+                              onChanged: (value) {
+                                setState(() {
+                                  controller.hospitalData!.id = value;
+                                });
+                              },
+                              items: list
+                                  .map((value) => DropdownMenuItem(
+                                      onTap: () {
+                                        setState(() {
+                                          controller.hospitalData = value;
+                                        });
+                                      },
+                                      value: value.id,
+                                      child: Text(value.name!)))
+                                  .toList(),
                             ),
-                            value: controller.hospitalData!.id,
-                            onChanged: (value) {
-                              setState(() {
-                                controller.hospitalData!.id = value;
-                              });
-                            },
-                            items: list
-                                .map((value) => DropdownMenuItem(
-                                    onTap: () {
-                                      setState(() {
-                                        controller.hospitalData = value;
-                                      });
-                                    },
-                                    value: value.id,
-                                    child: Text(value.name!)))
-                                .toList(),
                           );
                         }
                         return Container();
