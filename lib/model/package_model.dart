@@ -41,6 +41,34 @@ class PackageModel {
       'post': post,
       'into': into,
       'image': image,
+      'doctorData': doctorData?.toJson(),
+    };
+  }
+}
+
+class HistoryPackageModel {
+  String? timestamp;
+  UserModel? userData;
+
+  PackageModel? packageData;
+
+  HistoryPackageModel({
+    this.timestamp,
+    this.userData,
+    this.packageData,
+  });
+
+  HistoryPackageModel.fromJson(Map<String, dynamic> json) {
+    timestamp = json['timestamp'];
+    userData = UserModel.fromJson(json['userData']);
+    packageData = PackageModel.fromJson(json['package']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'timestamp': timestamp,
+      'userData': userData?.toJson(),
+      'package': packageData?.toJson(),
     };
   }
 }

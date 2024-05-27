@@ -29,22 +29,20 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
           List<UserModel> doctors = snapshot.data!.docs
               .map((e) => UserModel.fromJson(e.data()))
               .toList();
-          return Center(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 1.1,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 25),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: doctors.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                var userData = doctors[index];
-                return favouriteDoctorWidget(userData);
-              },
-            ),
+          return GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 1,
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 25),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: doctors.length,
+            itemBuilder: (context, index) {
+              var userData = doctors[index];
+              return favouriteDoctorWidget(userData);
+            },
           );
         }
         return GridView.builder(
@@ -56,7 +54,6 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 4,
-          scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return CustomShimmer(child: favouriteDoctorWidget(UserModel()));
           },

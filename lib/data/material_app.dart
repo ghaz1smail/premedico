@@ -11,6 +11,7 @@ import 'package:premedico/view/screens/d_signup_screen.dart';
 import 'package:premedico/view/screens/edit_profile_screen.dart';
 import 'package:premedico/view/screens/forget_password_screen.dart';
 import 'package:premedico/view/screens/doctor_dashboard_screen.dart';
+import 'package:premedico/view/screens/history_sergery_screen.dart';
 import 'package:premedico/view/screens/hospitals_screen.dart';
 import 'package:premedico/view/screens/login_screen.dart';
 import 'package:premedico/view/screens/notifications_screen.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         "scheduling": (context) => const SchedulingScreen(),
         "newScheduling": (context) => const AddSchedulingScreen(),
         "newPackage": (context) => const AddNewPackage(),
+        "historyPackage": (context) => const HistorySurgeryScreen(),
       },
       home: const SplashScreen(),
     );

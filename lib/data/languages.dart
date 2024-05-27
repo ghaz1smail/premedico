@@ -270,6 +270,7 @@ class Languages extends Translations {
           'pick_hospital': 'Pick hospital',
           'review_the_consultation': 'Review the consultation',
           'review': 'Review',
+          'my_packages': 'My packages',
         },
       };
 }

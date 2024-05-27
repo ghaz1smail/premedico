@@ -198,10 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                              height: 425,
-                              width: Get.width,
-                              child: const TopDoctorsGrid()),
+                          const TopDoctorsGrid(),
                           StreamBuilder(
                             stream:
                                 firestore.collection('packages').snapshots(),
