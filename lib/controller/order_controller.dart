@@ -33,6 +33,7 @@ class OrderController extends GetxController {
         'timestamp': id,
         'note': note.text,
         'paymentMethod': paymentMethod,
+        'amount': (doctorData.price ?? 0 + adminFee).toString(),
         'doctorData': doctorData.toJson(),
         'userData': Get.find<AuthController>().userData!.toJson()
       });

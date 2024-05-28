@@ -57,8 +57,8 @@ class PSignUpScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: CustomTextField(
-                      hint: 'enter_password',
-                      label: 'password',
+                      hint: 'confirm_your_password',
+                      label: 'confirm_password',
                       controller: controller.conPassword,
                       icon: Icons.lock,
                       validator: controller.validateConfirmPass,

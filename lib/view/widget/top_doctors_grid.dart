@@ -22,6 +22,7 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
       stream: firestore
           .collection('users')
           .where('type', isEqualTo: 'doctor')
+          .orderBy('rate', descending: true)
           .limit(4)
           .snapshots(),
       builder: (context, snapshot) {

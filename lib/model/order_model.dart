@@ -8,6 +8,7 @@ class OrderModel {
   String paymentMethod;
   String timestamp;
   String dateTime;
+  String? amount;
   String? rate;
 
   OrderModel(
@@ -18,6 +19,7 @@ class OrderModel {
       required this.paymentMethod,
       required this.timestamp,
       required this.dateTime,
+      this.amount,
       this.rate});
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class OrderModel {
       note: json['note'] ?? '',
       id: json['id'] ?? '',
       rate: json['rate'] ?? '',
+      amount: json['amount'] ?? '0',
       doctorData: UserModel.fromJson(json['doctorData']),
       userData: UserModel.fromJson(json['userData']),
       paymentMethod: json['paymentMethod'] ?? '',

@@ -241,7 +241,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             horizontal: 25),
                                         height: 125,
                                         width: Get.width,
-                                        child: ListView.builder(
+                                        child: ListView.separated(
+                                          separatorBuilder: (context, index) =>
+                                              const SizedBox(
+                                            width: 20,
+                                          ),
                                           shrinkWrap: true,
                                           itemCount: list.length,
                                           scrollDirection: Axis.horizontal,

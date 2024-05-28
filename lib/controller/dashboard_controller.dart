@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DashboardController extends GetxController {
   int selectedIndex = 0, bannerIndex = 0;
+
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   List bottomItems = [Icons.home_filled, Icons.favorite_border, Icons.chat];
   var banner = [
@@ -17,7 +18,8 @@ class DashboardController extends GetxController {
       locationLoading = false,
       loadingCenter = false,
       called = false;
-  TextEditingController searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController(),
+      price = TextEditingController();
 
   Completer<GoogleMapController>? googleController;
   LatLng? userLocation;

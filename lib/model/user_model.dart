@@ -66,7 +66,7 @@ class UserModel {
           ? DateTime.now().toString()
           : json['birth'].toString().isEmpty
               ? DateTime.now().toString()
-              : json['image'],
+              : json['birth'],
       phone: json['phone'] ?? '',
       bio: json['bio'] ?? '',
       rate: json['rate'] ?? '0',

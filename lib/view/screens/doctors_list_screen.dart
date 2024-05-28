@@ -42,6 +42,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
               ? firestore
                   .collection('users')
                   .where('type', isEqualTo: 'doctor')
+                  .orderBy('rate', descending: true)
                   .snapshots()
               : firestore.collection('users').where('favorites',
                   arrayContainsAny: [
@@ -73,7 +74,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
             }
             return ListView.builder(
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: 5,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {

@@ -39,7 +39,7 @@ class BookAppointmentScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '${'60'.tr} ${'jod'.tr}',
+                        '${(doctorData.price ?? 0 + controller.adminFee).toString()} ${'jod'.tr}',
                         style: const TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold),
                       )

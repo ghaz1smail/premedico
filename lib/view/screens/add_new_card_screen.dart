@@ -23,7 +23,14 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: const SizedBox(),
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              )),
           title: Text(
             'add_new_card'.tr,
             style: const TextStyle(color: Colors.black),

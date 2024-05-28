@@ -10,6 +10,7 @@ import 'package:premedico/view/widget/custom_banner.dart';
 import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_drawer.dart';
 import 'package:premedico/view/widget/custom_image.dart';
+import 'package:premedico/view/widget/custom_text_field.dart';
 
 class DoctorDashboardScreen extends StatelessWidget {
   const DoctorDashboardScreen({super.key});
@@ -35,6 +36,40 @@ class DoctorDashboardScreen extends StatelessWidget {
                     ));
               }),
               actions: [
+                IconButton(
+                    onPressed: () {
+                      controller.price.text =
+                          Get.find<AuthController>().userData!.price.toString();
+                      Get.defaultDialog(
+                          title: 'set_price'.tr,
+                          content: CustomTextField(
+                            hint: 'price',
+                            label: 'price',
+                            controller: controller.price,
+                            inputType: TextInputType.number,
+                          ),
+                          actions: [
+                            CustomButton(
+                              onPressed: () {
+                                firestore
+                                    .collection('users')
+                                    .doc(Get.find<AuthController>()
+                                        .userData!
+                                        .uid)
+                                    .update({'price': controller.price.text});
+
+                                Get.find<AuthController>().userData!.price =
+                                    double.parse(controller.price.text);
+                                Get.back();
+                              },
+                              title: 'submit',
+                            )
+                          ]);
+                    },
+                    icon: const Icon(
+                      Icons.price_change,
+                      color: Colors.black,
+                    )),
                 IconButton(
                     onPressed: () {
                       Get.toNamed('notifications');
@@ -144,7 +179,11 @@ class DoctorDashboardScreen extends StatelessWidget {
                                       horizontal: 25),
                                   height: 125,
                                   width: Get.width,
-                                  child: ListView.builder(
+                                  child: ListView.separated(
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(
+                                      width: 20,
+                                    ),
                                     shrinkWrap: true,
                                     itemCount: list.length,
                                     scrollDirection: Axis.horizontal,

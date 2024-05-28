@@ -16,9 +16,10 @@ import 'package:premedico/view/widget/custom_loading.dart';
 import 'package:premedico/view/widget/rating_bottom_sheet.dart';
 
 class MessagesScreen extends StatefulWidget {
-  const MessagesScreen({super.key, required this.userData, this.orderData});
+  const MessagesScreen(
+      {super.key, required this.userData, required this.orderData});
   final UserModel userData;
-  final OrderModel? orderData;
+  final OrderModel orderData;
 
   @override
   State<MessagesScreen> createState() => _MessagesScreenState();
@@ -30,19 +31,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Timer? _debounce;
 
   checkAvailablity() {
-    if (widget.orderData != null) {
-      if (DateTime.now()
-                  .difference(DateTime.parse(widget.orderData!.dateTime))
-                  .inHours >=
-              0 &&
-          DateTime.now()
-                  .difference(DateTime.parse(widget.orderData!.dateTime))
-                  .inHours <
-              3) {
-        available = true;
-      } else {
-        available = false;
-      }
+    if (DateTime.now()
+                .difference(DateTime.parse(widget.orderData.dateTime))
+                .inHours >=
+            0 &&
+        DateTime.now()
+                .difference(DateTime.parse(widget.orderData.dateTime))
+                .inHours <
+            3) {
+      available = true;
+    } else {
+      available = false;
     }
   }
 
@@ -172,6 +171,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
       'lastMessage': text ? message.text : 'image',
       'updatedAt': FieldValue.serverTimestamp(),
       'userData': widget.userData.toJson(),
+      'orderData': widget.orderData.toJson(),
       'typing': false,
       'clicked': true
     });
@@ -185,6 +185,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
       'lastMessage': text ? message.text : 'image',
       'updatedAt': FieldValue.serverTimestamp(),
       'userData': Get.find<AuthController>().userData!.toJson(),
+      'orderData': widget.orderData.toJson(),
       'typing': false,
       'clicked': false
     });
@@ -288,13 +289,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   Icons.phone,
                   color: Colors.black,
                 )),
-          if (widget.orderData != null)
-            if (DateTime.parse(widget.orderData!.dateTime)
-                .isBefore(DateTime.now()))
+          if (DateTime.parse(widget.orderData.dateTime)
+              .isBefore(DateTime.now()))
+            if (widget.orderData.rate!.isEmpty)
               IconButton(
                   onPressed: () {
                     customBottomSheet(RatingBottomSheet(
-                      orderData: widget.orderData!,
+                      orderData: widget.orderData,
                     ));
                   },
                   icon: const Icon(

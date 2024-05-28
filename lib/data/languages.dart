@@ -271,6 +271,8 @@ class Languages extends Translations {
           'review_the_consultation': 'Review the consultation',
           'review': 'Review',
           'my_packages': 'My packages',
+          'set_price': 'Set price',
+          'price': 'Price',
         },
       };
 }

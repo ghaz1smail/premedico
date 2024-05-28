@@ -74,7 +74,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
               : null,
           title: Text(data.userData.name ?? ''),
           onTap: () {
-            Get.to(() => MessagesScreen(userData: data.userData));
+            Get.to(() => MessagesScreen(
+                  userData: data.userData,
+                  orderData: data.orderData,
+                ));
             firestore
                 .collection('users')
                 .doc(Get.find<AuthController>().userData!.uid)

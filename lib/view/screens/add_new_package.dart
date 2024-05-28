@@ -85,7 +85,7 @@ class _AddNewPackageState extends State<AddNewPackage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
+          child: ListView(
             children: [
               GestureDetector(
                 onTap: () => pickImage(),
