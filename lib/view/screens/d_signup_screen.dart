@@ -134,6 +134,34 @@ class _DSignUpScreenState extends State<DSignUpScreen> {
                     onPressed: () {
                       if (controller.hospitalData != null) {
                         controller.signingUp();
+                      } else {
+                        Get.showSnackbar(GetSnackBar(
+                          snackStyle: SnackStyle.FLOATING,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 50),
+                          borderRadius: 10,
+                          duration: const Duration(seconds: 5),
+                          backgroundColor: Colors.white,
+                          boxShadows: const [
+                            BoxShadow(
+                                blurRadius: 5,
+                                spreadRadius: 0.1,
+                                color: Colors.black12)
+                          ],
+                          messageText: Text(
+                            'please_select_hospital'.tr,
+                            textAlign: TextAlign.center,
+                          ),
+                          titleText: Text(
+                            'error'.tr,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: appConstant.primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          snackPosition: SnackPosition.TOP,
+                        ));
                       }
                     },
                     title: "sign_up".tr,

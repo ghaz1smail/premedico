@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -263,6 +264,7 @@ class AuthController extends GetxController {
       'phone': '',
       'bio': '',
       'rate': '0',
+      'price': '0',
       'online': true,
       'uid': firebaseAuth.currentUser!.uid,
       'type': type,
@@ -270,12 +272,30 @@ class AuthController extends GetxController {
       'major': major.text,
       if (type == 'doctor') 'hospital': hospitalData!.toJson()
     }).then((value) {
-      userData = UserModel(
-          name: name.text,
-          email: email.text,
-          image: '',
-          type: type,
-          uid: firebaseAuth.currentUser!.uid);
+      userData = UserModel.fromJson({
+        'name': name.text,
+        'email': email.text,
+        'username': username.text,
+        'favorites': [],
+        'image': '',
+        'gender': '',
+        'birth': '',
+        'phone': '',
+        'bio': '',
+        'rate': '0',
+        'price': '0',
+        'online': true,
+        'uid': firebaseAuth.currentUser!.uid,
+        'type': type,
+        'years': years.text,
+        'major': major.text,
+        if (type == 'doctor') 'hospital': hospitalData!.toJson()
+      });
+      if (type == 'doctor') {
+        firestore.collection('hospitals').doc(hospitalData!.id).update({
+          'users': FieldValue.arrayUnion([firebaseAuth.currentUser!.uid])
+        });
+      }
     });
   }
 

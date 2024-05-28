@@ -128,6 +128,11 @@ class Languages extends Translations {
           'pick_hospital': 'اختر المستشفى',
           'review_the_consultation': 'راجع الاستشارة',
           'review': 'مراجعة',
+          'my_packages': 'باقاتي',
+          'set_price': 'تحديد السعر',
+          'price': 'السعر',
+          'error': 'خطأ',
+          'please_select_hospital': 'الرجاء اختيار المستشفى'
         },
         'en_US': {
           'login': 'Login',
@@ -273,6 +278,8 @@ class Languages extends Translations {
           'my_packages': 'My packages',
           'set_price': 'Set price',
           'price': 'Price',
+          'error': 'Error',
+          'please_select_hospital': 'Please select hospital',
         },
       };
 }
