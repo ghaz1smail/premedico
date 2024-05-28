@@ -8,7 +8,9 @@
     <application
         android:label="premedico"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher">  
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCVs68O8ytrRteAKCN9VSo4rnjjalEd-mk"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,10 +26,8 @@
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
-                 <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCVs68O8ytrRteAKCN9VSo4rnjjalEd-mk"/>
+              android:resource="@style/NormalTheme"/>
+               
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

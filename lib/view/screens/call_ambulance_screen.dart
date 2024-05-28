@@ -30,7 +30,7 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
   @override
   void dispose() {
     dashboardController.googleController = null;
-    dashboardController.searchController.clear();
+    dashboardController.mapContollrer.clear();
     super.dispose();
   }
 
@@ -103,7 +103,7 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                                       ]),
                                   child: GooglePlacesAutoCompleteTextFormField(
                                     textEditingController:
-                                        mapController.searchController,
+                                        mapController.mapContollrer,
                                     googleAPIKey:
                                         appConstant.androidGoogleMapKey,
                                     debounceTime: 400,
@@ -121,9 +121,9 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                                         hintText: 'search_address'.tr),
                                     itmClick: (postalCodeResponse) {},
                                     getPlaceDetailWithLatLng: (prediction) {
-                                      mapController.searchController.text =
+                                      mapController.mapContollrer.text =
                                           prediction.description!;
-                                      mapController.searchController.selection =
+                                      mapController.mapContollrer.selection =
                                           TextSelection.fromPosition(
                                               TextPosition(
                                                   offset: prediction
@@ -152,7 +152,7 @@ class _CallAmbulanceScreenState extends State<CallAmbulanceScreen> {
                             children: [
                               CustomButton(
                                 onPressed: () async {
-                                  mapController.searchController.clear();
+                                  mapController.mapContollrer.clear();
 
                                   mapController.callAmbulance();
                                 },

@@ -19,6 +19,7 @@ class DashboardController extends GetxController {
       loadingCenter = false,
       called = false;
   TextEditingController searchController = TextEditingController(),
+      mapContollrer = TextEditingController(),
       price = TextEditingController();
 
   Completer<GoogleMapController>? googleController;
