@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/data/get_initial.dart';
@@ -9,6 +8,7 @@ import 'package:premedico/model/order_model.dart';
 import 'package:premedico/model/user_model.dart';
 import 'package:premedico/view/screens/add_new_card_screen.dart';
 import 'package:premedico/view/screens/messages_screen.dart';
+import 'package:premedico/view/widget/custom_button.dart';
 
 class OrderController extends GetxController {
   DateTime dateTimePicker = DateTime.now();
@@ -27,55 +27,79 @@ class OrderController extends GetxController {
       await Get.to(() => const AddNewCardScreen());
     }
     if (done || paymentMethod == 'cash') {
-      await firestore.collection('orders').doc(id).set({
-        'id': id,
-        'dateTime': dateTimePicker.toString(),
-        'timestamp': id,
-        'note': note.text,
-        'paymentMethod': paymentMethod,
-        'amount': (doctorData.price ?? 0 + adminFee).toString(),
-        'doctorData': doctorData.toJson(),
-        'userData': Get.find<AuthController>().userData!.toJson()
-      });
-      await firestore.collection('users').doc(doctorData.uid).update({
-        'scheduling': FieldValue.arrayRemove([scheduling!.toJson()])
-      });
-      scheduling!.user = Get.find<AuthController>().userData!.uid;
-      await firestore.collection('users').doc(doctorData.uid).update({
-        'scheduling': FieldValue.arrayUnion([scheduling!.toJson()])
-      });
-      await firestore
-          .collection('users')
-          .doc(doctorData.uid)
-          .collection('notifications')
-          .doc(id)
-          .set({
-        'id': id,
-        'title': 'scheduled_appointment',
-        'clicked': false,
-        'timestamp': Timestamp.now().millisecondsSinceEpoch.toString(),
-        'orderData': {
-          'id': id,
-          'dateTime': dateTimePicker.toString(),
-          'timestamp': id,
-          'note': note.text,
-          'paymentMethod': paymentMethod,
-          'doctorData': doctorData.toJson(),
-          'userData': Get.find<AuthController>().userData!.toJson()
-        }
-      });
-      Get.off(() => MessagesScreen(
-            userData: doctorData,
-            orderData: OrderModel.fromJson({
-              'id': id,
-              'dateTime': dateTimePicker.toString(),
-              'timestamp': id,
-              'note': note.text,
-              'paymentMethod': paymentMethod,
-              'doctorData': doctorData.toJson(),
-              'userData': Get.find<AuthController>().userData!.toJson()
-            }),
-          ));
+      Get.defaultDialog(
+          title: 'success',
+          content: const CircleAvatar(
+            backgroundColor: Colors.green,
+            child: Icon(
+              Icons.check,
+              size: 100,
+            ),
+          ),
+          actions: [
+            CustomButton(
+                onPressed: () async {
+                  Get.back();
+                  await firestore.collection('orders').doc(id).set({
+                    'id': id,
+                    'dateTime': dateTimePicker.toString(),
+                    'timestamp': id,
+                    'note': note.text,
+                    'paymentMethod': paymentMethod,
+                    'amount': (doctorData.price ?? 0 + adminFee).toString(),
+                    'doctorData': doctorData.toJson(),
+                    'userData': Get.find<AuthController>().userData!.toJson()
+                  });
+                  await firestore
+                      .collection('users')
+                      .doc(doctorData.uid)
+                      .update({
+                    'scheduling': FieldValue.arrayRemove([scheduling!.toJson()])
+                  });
+                  scheduling!.user = Get.find<AuthController>().userData!.uid;
+                  await firestore
+                      .collection('users')
+                      .doc(doctorData.uid)
+                      .update({
+                    'scheduling': FieldValue.arrayUnion([scheduling!.toJson()])
+                  });
+                  await firestore
+                      .collection('users')
+                      .doc(doctorData.uid)
+                      .collection('notifications')
+                      .doc(id)
+                      .set({
+                    'id': id,
+                    'title': 'scheduled_appointment',
+                    'clicked': false,
+                    'timestamp':
+                        Timestamp.now().millisecondsSinceEpoch.toString(),
+                    'orderData': {
+                      'id': id,
+                      'dateTime': dateTimePicker.toString(),
+                      'timestamp': id,
+                      'note': note.text,
+                      'paymentMethod': paymentMethod,
+                      'doctorData': doctorData.toJson(),
+                      'userData': Get.find<AuthController>().userData!.toJson()
+                    }
+                  });
+                  Get.off(() => MessagesScreen(
+                        userData: doctorData,
+                        orderData: OrderModel.fromJson({
+                          'id': id,
+                          'dateTime': dateTimePicker.toString(),
+                          'timestamp': id,
+                          'note': note.text,
+                          'paymentMethod': paymentMethod,
+                          'doctorData': doctorData.toJson(),
+                          'userData':
+                              Get.find<AuthController>().userData!.toJson()
+                        }),
+                      ));
+                },
+                title: 'ok')
+          ]);
     }
 
     orderingLoading = false;

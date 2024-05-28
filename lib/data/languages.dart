@@ -135,6 +135,7 @@ class Languages extends Translations {
           'please_select_hospital': 'الرجاء اختيار المستشفى',
           'scheduled_appointment': 'موعد محدد',
           'reminder_tommorow': 'تذكير غداً',
+          'change_appointment': 'تم تغيير الموعد',
           'years': 'سنوات',
           'months': 'أشهر',
           's': 'ثواني',
@@ -142,6 +143,8 @@ class Languages extends Translations {
           'h': 'ساعات',
           'w': 'أسابيع',
           'd': 'أيام',
+          "ok": "تم",
+          "success": "تم بنجاح",
         },
         'en_US': {
           'login': 'Login',
@@ -291,6 +294,7 @@ class Languages extends Translations {
           'please_select_hospital': 'Please select hospital',
           'scheduled_appointment': 'Scheduled appointment',
           'reminder_tommorow': 'Reminder tommorow',
+          'change_appointment': 'Scheduled changed',
           "years": "Years",
           "months": "Months",
           "s": "s",
@@ -298,6 +302,8 @@ class Languages extends Translations {
           "h": "h",
           "w": "w",
           "d": "d",
+          "ok": "OK",
+          "success": "Success",
         },
       };
 }

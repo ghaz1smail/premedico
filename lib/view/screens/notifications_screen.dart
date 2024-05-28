@@ -61,7 +61,8 @@ class NotificationsScreen extends StatelessWidget {
                     data.title.tr,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: data.title == 'reminder_tommorow'
+                  subtitle: data.title == 'reminder_tommorow' ||
+                          data.title == 'change_appointment'
                       ? Text(
                           DateFormat('dd/MM/yyyy hh:mm a').format(
                               DateTime.fromMillisecondsSinceEpoch(

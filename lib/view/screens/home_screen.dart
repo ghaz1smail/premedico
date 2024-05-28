@@ -7,6 +7,7 @@ import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/package_model.dart';
 import 'package:premedico/model/search_model.dart';
 import 'package:premedico/view/screens/doctor_details_screen.dart';
+import 'package:premedico/view/screens/hospital_details_screen.dart';
 import 'package:premedico/view/screens/surgery_details_screen.dart';
 import 'package:premedico/view/screens/surgery_package_screen.dart';
 import 'package:premedico/view/widget/custom_banner.dart';
@@ -106,6 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           if (search.types == 'doctor') {
                                             Get.to(() => DoctorDetailsScreen(
                                                 doctorData: search.users!));
+                                          } else {
+                                            Get.to(() => HospitalDetailsScreen(
+                                                hospitalData:
+                                                    search.hospitals!));
                                           }
                                         },
                                         leading: CustomImage(

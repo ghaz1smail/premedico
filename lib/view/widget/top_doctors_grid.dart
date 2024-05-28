@@ -33,7 +33,7 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
           return GridView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 1,
+                childAspectRatio: 0.95,
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 25),

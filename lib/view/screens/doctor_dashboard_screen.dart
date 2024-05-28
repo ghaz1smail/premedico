@@ -114,9 +114,9 @@ class DoctorDashboardScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(const OrdersScreen(
-                          user: false,
-                        ));
+                        Get.to(() => const OrdersScreen(
+                              user: false,
+                            ));
                       },
                       child: Chip(
                         label: Text(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +7,7 @@ import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/order_model.dart';
 import 'package:premedico/view/screens/doctors_list_screen.dart';
 import 'package:premedico/view/screens/messages_screen.dart';
+import 'package:premedico/view/widget/custom_button.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
@@ -19,6 +21,8 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+  DateTime selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +59,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 .collection('orders')
                 .where('userData.uid',
                     isEqualTo: Get.find<AuthController>().userData!.uid)
+                // .orderBy('timestamp', descending: true)
                 .snapshots()
             : firestore
                 .collection('orders')
                 .where('doctorData.uid',
                     isEqualTo: Get.find<AuthController>().userData!.uid)
+                // .orderBy('timestamp', descending: true)
                 .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -100,31 +106,94 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
   }
 
+  selectDate(data) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        selectedDate = DateTime(picked.year, picked.month, picked.day,
+            selectedDate.hour, selectedDate.minute);
+      });
+      selectTime(data);
+    }
+  }
+
+  selectTime(OrderModel data) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        selectedDate = DateTime(selectedDate.year, selectedDate.month,
+            selectedDate.day, picked.hour, picked.minute);
+      });
+      Get.defaultDialog(
+          title: 'Are you sure you want to change the appointment?',
+          content: Text(DateFormat('dd/MM/yyyy hh:mm a').format(selectedDate)),
+          actions: [
+            CustomButton(
+                onPressed: () async {
+                  Get.back();
+                  await firestore
+                      .collection('orders')
+                      .doc(data.id)
+                      .update({'dateTime': selectedDate.toIso8601String()});
+                  await firestore
+                      .collection('users')
+                      .doc(data.userData.uid)
+                      .collection('notifications')
+                      .doc(data.id)
+                      .set({
+                    'id': data.id,
+                    'title': 'change_appointment',
+                    'clicked': false,
+                    'timestamp':
+                        Timestamp.now().millisecondsSinceEpoch.toString(),
+                    'orderData': data.toJson()
+                  });
+                },
+                title: 'submit')
+          ]);
+    }
+  }
+
   Widget orderWidget(OrderModel data) {
-    return Card(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15))),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListTile(
-          leading: CustomImage(
-            url: widget.user
-                ? data.doctorData.image.toString()
-                : data.userData.image.toString(),
-            radius: 10,
+    return GestureDetector(
+      onLongPress: () {
+        if (Get.find<AuthController>().userData!.type == 'doctor') {
+          selectDate(data);
+        }
+      },
+      child: Card(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListTile(
+            leading: CustomImage(
+              url: widget.user
+                  ? data.doctorData.image.toString()
+                  : data.userData.image.toString(),
+              radius: 10,
+            ),
+            trailing: Text('#${printLastThreeChars(data.id)}'),
+            subtitle: Text(DateFormat('dd/MM/yyyy, hh:mm')
+                .format(DateTime.parse(data.dateTime))),
+            title: Text(widget.user
+                ? data.doctorData.name.toString()
+                : data.userData.name.toString()),
+            onTap: () {
+              Get.to(() => MessagesScreen(
+                    userData: widget.user ? data.doctorData : data.userData,
+                    orderData: data,
+                  ));
+            },
           ),
-          trailing: Text('#${printLastThreeChars(data.id)}'),
-          subtitle: Text(DateFormat('dd/MM/yyyy, hh:mm')
-              .format(DateTime.parse(data.dateTime))),
-          title: Text(widget.user
-              ? data.doctorData.name.toString()
-              : data.userData.name.toString()),
-          onTap: () {
-            Get.to(() => MessagesScreen(
-                  userData: widget.user ? data.doctorData : data.userData,
-                  orderData: data,
-                ));
-          },
         ),
       ),
     );
