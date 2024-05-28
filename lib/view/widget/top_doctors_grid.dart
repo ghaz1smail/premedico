@@ -56,7 +56,10 @@ class _TopDoctorsGridState extends State<TopDoctorsGrid> {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 4,
           itemBuilder: (context, index) {
-            return CustomShimmer(child: favouriteDoctorWidget(UserModel()));
+            return CustomShimmer(
+                child: Container(
+              color: Colors.red,
+            ));
           },
         );
       },

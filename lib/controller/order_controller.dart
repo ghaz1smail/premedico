@@ -44,6 +44,26 @@ class OrderController extends GetxController {
       await firestore.collection('users').doc(doctorData.uid).update({
         'scheduling': FieldValue.arrayUnion([scheduling!.toJson()])
       });
+      await firestore
+          .collection('users')
+          .doc(doctorData.uid)
+          .collection('notifications')
+          .doc(id)
+          .set({
+        'id': id,
+        'title': 'scheduled_appointment',
+        'clicked': false,
+        'timestamp': Timestamp.now().millisecondsSinceEpoch.toString(),
+        'orderData': {
+          'id': id,
+          'dateTime': dateTimePicker.toString(),
+          'timestamp': id,
+          'note': note.text,
+          'paymentMethod': paymentMethod,
+          'doctorData': doctorData.toJson(),
+          'userData': Get.find<AuthController>().userData!.toJson()
+        }
+      });
       Get.off(() => MessagesScreen(
             userData: doctorData,
             orderData: OrderModel.fromJson({

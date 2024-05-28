@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:premedico/controller/dashboard_controller.dart';
+import 'package:premedico/controller/functions_controller.dart';
 import 'package:premedico/data/get_initial.dart';
 import 'package:premedico/model/hospital_model.dart';
 import 'package:premedico/model/user_model.dart';
@@ -306,6 +307,7 @@ class AuthController extends GetxController {
       email.text = emailx;
       rememberMe = true;
     }
+
     if (firebaseAuth.currentUser == null) {
       await Future.delayed(const Duration(seconds: 2));
       if (firstTime) {
@@ -316,6 +318,7 @@ class AuthController extends GetxController {
     } else {
       await getUserData();
     }
+    Get.find<FunctionsController>().checkAppointments();
   }
 
   getUserData() async {

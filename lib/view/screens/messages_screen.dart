@@ -258,8 +258,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   @override
   void initState() {
-    showMessage();
-    checkAvailablity();
+    if (Get.find<AuthController>().userData!.type != 'doctor') {
+      showMessage();
+      checkAvailablity();
+    }
+
     super.initState();
   }
 

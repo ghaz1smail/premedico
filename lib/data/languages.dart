@@ -132,7 +132,16 @@ class Languages extends Translations {
           'set_price': 'تحديد السعر',
           'price': 'السعر',
           'error': 'خطأ',
-          'please_select_hospital': 'الرجاء اختيار المستشفى'
+          'please_select_hospital': 'الرجاء اختيار المستشفى',
+          'scheduled_appointment': 'موعد محدد',
+          'reminder_tommorow': 'تذكير غداً',
+          'years': 'سنوات',
+          'months': 'أشهر',
+          's': 'ثواني',
+          'm': 'دقائق',
+          'h': 'ساعات',
+          'w': 'أسابيع',
+          'd': 'أيام',
         },
         'en_US': {
           'login': 'Login',
@@ -280,6 +289,15 @@ class Languages extends Translations {
           'price': 'Price',
           'error': 'Error',
           'please_select_hospital': 'Please select hospital',
+          'scheduled_appointment': 'Scheduled appointment',
+          'reminder_tommorow': 'Reminder tommorow',
+          "years": "Years",
+          "months": "Months",
+          "s": "s",
+          "m": "m",
+          "h": "h",
+          "w": "w",
+          "d": "d",
         },
       };
 }

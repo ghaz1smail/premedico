@@ -72,7 +72,7 @@ class _SchedulingScreenState extends State<SchedulingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        DateFormat('dd/mm/yyyy').format(
+                        DateFormat('dd/MM/yyyy').format(
                           DateTime.parse(d.date!),
                         ),
                         style: const TextStyle(

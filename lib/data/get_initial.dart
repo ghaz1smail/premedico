@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:premedico/controller/auth_controller.dart';
 import 'package:premedico/controller/dashboard_controller.dart';
+import 'package:premedico/controller/functions_controller.dart';
 import 'package:premedico/controller/language_controller.dart';
 import 'package:premedico/controller/order_controller.dart';
 import 'package:premedico/data/app_constant.dart';
@@ -18,6 +19,7 @@ class GetInitial {
     Get.put(AuthController());
     Get.put(DashboardController());
     Get.put(OrderController());
+    Get.put(FunctionsController());
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
