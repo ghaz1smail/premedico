@@ -7,10 +7,15 @@ import 'package:premedico/view/screens/surgery_details_screen.dart';
 import 'package:premedico/view/widget/custom_image.dart';
 import 'package:premedico/view/widget/custom_loading.dart';
 
-class SurgeryPackageScreen extends StatelessWidget {
+class SurgeryPackageScreen extends StatefulWidget {
   final bool user;
   const SurgeryPackageScreen({super.key, this.user = true});
 
+  @override
+  State<SurgeryPackageScreen> createState() => _SurgeryPackageScreenState();
+}
+
+class _SurgeryPackageScreenState extends State<SurgeryPackageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +24,18 @@ class SurgeryPackageScreen extends StatelessWidget {
           title: Text('sergery_package'.tr),
           backgroundColor: appConstant.primaryColor,
           actions: [
-            IconButton(
-                onPressed: () {
-                  Get.toNamed('historyPackage');
-                },
-                icon: const Icon(Icons.history))
+            Get.find<AuthController>().userData!.type == 'doctor'
+                ? IconButton(
+                    onPressed: () async {
+                      await Get.toNamed('newPackage');
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.add))
+                : IconButton(
+                    onPressed: () {
+                      Get.toNamed('historyPackage');
+                    },
+                    icon: const Icon(Icons.history))
           ],
         ),
         body: Container(
@@ -33,7 +45,7 @@ class SurgeryPackageScreen extends StatelessWidget {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(20))),
             child: StreamBuilder(
-              stream: user
+              stream: widget.user
                   ? firestore.collection('packages').snapshots()
                   : firestore
                       .collection('packages')
@@ -56,7 +68,7 @@ class SurgeryPackageScreen extends StatelessWidget {
                       var data = list[index];
                       return GestureDetector(
                         onTap: () {
-                          if (user) {
+                          if (widget.user) {
                             Get.to(
                                 () => SurgeryDetailsScreen(packageData: data));
                           }
