@@ -43,7 +43,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                           ));
                     } else {
                       Get.snackbar(
-                        'soory'.tr,
+                        'sorry'.tr,
                         'Please select a time slot',
                       );
                     }

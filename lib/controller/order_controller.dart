@@ -28,8 +28,9 @@ class OrderController extends GetxController {
     }
     if (done || paymentMethod == 'cash') {
       Get.defaultDialog(
-          title: 'success',
+          title: 'success'.tr,
           content: const CircleAvatar(
+            radius: 60,
             backgroundColor: Colors.green,
             child: Icon(
               Icons.check,
@@ -84,27 +85,32 @@ class OrderController extends GetxController {
                       'userData': Get.find<AuthController>().userData!.toJson()
                     }
                   });
-                  Get.off(() => MessagesScreen(
-                        userData: doctorData,
-                        orderData: OrderModel.fromJson({
-                          'id': id,
-                          'dateTime': dateTimePicker.toString(),
-                          'timestamp': id,
-                          'note': note.text,
-                          'paymentMethod': paymentMethod,
-                          'doctorData': doctorData.toJson(),
-                          'userData':
-                              Get.find<AuthController>().userData!.toJson()
-                        }),
-                      ));
+                  if (paymentMethod == 'cash') {
+                    Get.back();
+                    Get.back();
+                  } else {
+                    Get.off(() => MessagesScreen(
+                          userData: doctorData,
+                          orderData: OrderModel.fromJson({
+                            'id': id,
+                            'dateTime': dateTimePicker.toString(),
+                            'timestamp': id,
+                            'note': note.text,
+                            'paymentMethod': paymentMethod,
+                            'doctorData': doctorData.toJson(),
+                            'userData':
+                                Get.find<AuthController>().userData!.toJson()
+                          }),
+                        ));
+                    orderingLoading = false;
+                    paymentMethod = 'visa';
+                    done = false;
+                  }
                 },
                 title: 'ok')
           ]);
     }
 
-    orderingLoading = false;
-    paymentMethod = 'visa';
-    done = false;
     update();
   }
 
